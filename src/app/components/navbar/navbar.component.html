@@ -1,0 +1,100 @@
+<nav
+  class="navbar"
+  [class.scrolled]="isScrolled"
+  [class.menu-open]="isMenuOpen"
+  [attr.data-active-section]="activeSection"
+  aria-label="Main navigation"
+>
+  <div class="nav-shell">
+    <span class="nav-ambient nav-ambient-left" aria-hidden="true"></span>
+    <span class="nav-ambient nav-ambient-right" aria-hidden="true"></span>
+
+    <a
+      class="logo"
+      href="#home"
+      data-text="Julia.dev"
+      (click)="onLogoClick($event)"
+      aria-label="Go to home"
+    >
+      Julia.dev
+    </a>
+
+    <div class="desktop-links">
+      @for (link of links; track link.id) {
+        <a
+          [href]="link.href"
+          [class.active]="activeSection === link.id"
+          (click)="navigateTo(link, $event)"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+
+    <div class="nav-status" aria-label="Interface live">
+      <span aria-hidden="true"></span>
+      <small>live</small>
+    </div>
+
+    <button
+      class="command-button"
+      type="button"
+      aria-label="Open command center"
+      (click)="openCommandCenter()"
+    >
+      <span>Command</span>
+      <kbd>⌘K</kbd>
+    </button>
+
+    <a class="hire-button" href="#contact" (click)="navigateTo(contactLink, $event)">
+      Hire me
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [class.active]="isMenuOpen"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-controls="mobile-menu"
+      aria-label="Toggle navigation menu"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="mobile-backdrop" [class.visible]="isMenuOpen" (click)="closeMenu()" aria-hidden="true"></div>
+
+  <div id="mobile-menu" class="mobile-panel" [class.visible]="isMenuOpen">
+    <span class="mobile-glow" aria-hidden="true"></span>
+
+    <div class="mobile-panel-header">
+      <span>Julia.dev</span>
+      <strong>live</strong>
+    </div>
+
+    <div class="mobile-links">
+      @for (link of links; track link.id) {
+        <a
+          [href]="link.href"
+          [class.active]="activeSection === link.id"
+          (click)="navigateTo(link, $event)"
+        >
+          <span>{{ link.label }}</span>
+          <small>{{ link.href }}</small>
+        </a>
+      }
+    </div>
+
+    <a class="mobile-cta" href="#contact" (click)="navigateTo(contactLink, $event)">
+      Hire me
+    </a>
+
+    <button class="mobile-command" type="button" (click)="openCommandCenter()">
+      <span>Command Center</span>
+      <small>Search system modules</small>
+    </button>
+  </div>
+</nav>

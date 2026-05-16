@@ -1,0 +1,110 @@
+<app-section-shell sectionId="bugs" labelledBy="bugs-title" variant="projects" extraClass="bug-graveyard">
+  <app-section-header
+    badge="Debug logs recovered"
+    title="Bug Graveyard"
+    subtitle="Bugs I fought, fixed, and buried. Every bug here taught me something useful."
+    titleId="bugs-title"
+    [compactTitle]="true"
+  />
+
+  <div class="graveyard-console" aria-label="Bug graveyard summary">
+    <span>{{ bugs.length }} bugs buried</span>
+    <strong>A collection of real-world issues I debugged and survived.</strong>
+  </div>
+
+  <div class="bug-grid">
+    @for (bug of bugs; track bug.id; let index = $index) {
+      <article class="bug-card" appMagneticCard [class.high]="bug.severity === 'High'" [style.--bug-delay.ms]="index * 85">
+        <div class="bug-card-glow" aria-hidden="true"></div>
+
+        <header class="bug-card-header">
+          <span class="bug-id">BUG #{{ bugNumber(index) }}</span>
+          <span class="bug-status">{{ bug.status }}</span>
+        </header>
+
+        <h3>{{ bug.title }}</h3>
+
+        <div class="bug-meta">
+          <span>{{ bug.category }}</span>
+          <span>Severity: {{ bug.severity }}</span>
+        </div>
+
+        <div class="lesson-panel">
+          <span>Lesson learned</span>
+          <p>{{ bug.lesson }}</p>
+        </div>
+
+        <div class="bug-skills" aria-label="Skills unlocked">
+          @for (skill of bug.skills.slice(0, 4); track skill) {
+            <span>{{ skill }}</span>
+          }
+        </div>
+
+        <button type="button" (click)="openCertificate(bug, $event)">
+          Open Death Certificate
+        </button>
+      </article>
+    }
+  </div>
+
+  @if (selectedBug) {
+    <div class="certificate-backdrop" role="presentation" (click)="closeCertificate()"></div>
+
+    <section
+      #deathCertificate
+      class="death-certificate"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'Death certificate for ' + selectedBug.title"
+      tabindex="-1"
+    >
+      <div class="certificate-shell">
+        <header>
+          <div>
+            <span>DEATH CERTIFICATE</span>
+            <h3>{{ selectedBug.title }}</h3>
+          </div>
+
+          <button type="button" aria-label="Close death certificate" (click)="closeCertificate()">Close</button>
+        </header>
+
+        <div class="certificate-meta">
+          <span>Status: {{ selectedBug.status }}</span>
+          <span>Category: {{ selectedBug.category }}</span>
+          <span>Severity: {{ selectedBug.severity }}</span>
+        </div>
+
+        <div class="certificate-grid">
+          <article>
+            <span>Context</span>
+            <p>{{ selectedBug.context }}</p>
+          </article>
+
+          <article>
+            <span>Error</span>
+            <code>{{ selectedBug.error }}</code>
+          </article>
+
+          <article>
+            <span>Fix</span>
+            <p>{{ selectedBug.fix }}</p>
+          </article>
+
+          <article>
+            <span>Lesson</span>
+            <p>{{ selectedBug.lesson }}</p>
+          </article>
+        </div>
+
+        <div class="skills-unlocked">
+          <span>Skills unlocked</span>
+          <div>
+            @for (skill of selectedBug.skills; track skill) {
+              <strong>{{ skill }}</strong>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+</app-section-shell>

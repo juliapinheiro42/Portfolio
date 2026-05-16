@@ -1,0 +1,98 @@
+:host {
+  display: contents;
+}
+
+.system-boot {
+  position: fixed;
+  left: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 8500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: min(22rem, calc(100vw - 2rem));
+  padding: 0.82rem 0.95rem;
+  border: 1px solid rgba(255, 214, 235, 0.16);
+  border-radius: 999px;
+  color: #fff3fb;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 122, 191, 0.12), transparent 8rem),
+    linear-gradient(135deg, rgba(255, 243, 251, 0.11), rgba(125, 211, 252, 0.045)),
+    rgba(19, 11, 24, 0.7);
+  box-shadow:
+    0 18px 56px rgba(0, 0, 0, 0.26),
+    0 16px 42px rgba(255, 122, 191, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(22px) saturate(1.12);
+  animation: bootStatus 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  pointer-events: none;
+}
+
+.boot-dot {
+  width: 0.66rem;
+  height: 0.66rem;
+  border-radius: 999px;
+  background: #7dd3fc;
+  box-shadow: 0 0 16px rgba(125, 211, 252, 0.7);
+  animation: bootPulse 740ms ease-in-out infinite;
+}
+
+.system-boot p,
+.system-boot strong {
+  margin: 0;
+}
+
+.system-boot p {
+  color: rgba(255, 243, 251, 0.72);
+  font: 700 0.72rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
+.system-boot strong {
+  display: block;
+  margin-top: 0.15rem;
+  color: #fff3fb;
+  font: 800 0.86rem/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+@keyframes bootStatus {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.8rem, 0) scale(0.98);
+  }
+
+  16%,
+  72% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0) scale(0.99);
+  }
+}
+
+@keyframes bootPulse {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+}
+
+@media (max-width: 640px) {
+  .system-boot {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: auto;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .system-boot,
+  .boot-dot {
+    animation: none;
+  }
+}

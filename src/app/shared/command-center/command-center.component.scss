@@ -1,0 +1,483 @@
+:host {
+  --pink: #ff7abf;
+  --lilac: #c084fc;
+  --blue: #7dd3fc;
+  --white: #fff3fb;
+  --bg: #130b18;
+
+  display: contents;
+}
+
+.command-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 122, 191, 0.14), transparent 24rem),
+    radial-gradient(circle at 76% 70%, rgba(125, 211, 252, 0.09), transparent 22rem),
+    rgba(8, 3, 12, 0.68);
+  backdrop-filter: blur(12px) saturate(1.08);
+  animation: backdropIn 180ms ease both;
+}
+
+.command-center {
+  position: fixed;
+  left: 50%;
+  top: min(7vh, 4rem);
+  z-index: 9501;
+  display: grid;
+  grid-template-rows: auto minmax(16rem, 1fr) auto minmax(8rem, auto);
+  gap: 1rem;
+  width: min(calc(100vw - 2rem), 64rem);
+  height: min(92dvh, 58rem);
+  max-height: calc(100dvh - 1.5rem);
+  overflow: hidden;
+  padding: clamp(1rem, 2.4vw, 1.45rem);
+  border: 1px solid rgba(255, 214, 235, 0.16);
+  border-radius: 28px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 12% -8%, rgba(255, 122, 191, 0.14), transparent 14rem),
+    radial-gradient(circle at 96% 8%, rgba(125, 211, 252, 0.1), transparent 15rem),
+    linear-gradient(145deg, rgba(255, 243, 251, 0.085), rgba(125, 211, 252, 0.024)),
+    rgba(19, 11, 24, 0.93);
+  box-shadow:
+    0 42px 130px rgba(0, 0, 0, 0.56),
+    0 24px 80px rgba(255, 122, 191, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(20px) saturate(1.14);
+  transform: translateX(-50%);
+  animation: commandIn 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.command-aura,
+.command-scan,
+.command-tear {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.command-aura {
+  background:
+    linear-gradient(110deg, transparent 0 34%, rgba(255, 243, 251, 0.07) 48%, transparent 64%),
+    radial-gradient(circle at 72% 18%, rgba(125, 211, 252, 0.13), transparent 9rem);
+  opacity: 0.62;
+  transform: translateX(-18%);
+  animation: auraDrift 6.5s ease-in-out infinite alternate;
+}
+
+.command-scan {
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 8px,
+    rgba(255, 243, 251, 0.34) 9px,
+    transparent 10px
+  );
+}
+
+.command-tear {
+  opacity: 0.24;
+  background:
+    linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.24), transparent) 0 28% / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent, rgba(255, 122, 191, 0.2), transparent) 0 72% / 100% 1px no-repeat;
+  mix-blend-mode: screen;
+  animation: terminalTear 5.4s steps(1, end) infinite;
+}
+
+.command-header,
+.terminal-window,
+.command-meta,
+.command-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.command-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.command-kicker,
+.command-header p,
+.command-close,
+.command-meta,
+.terminal-window,
+.command-chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.command-kicker {
+  margin: 0 0 0.4rem;
+  color: rgba(125, 211, 252, 0.78);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: lowercase;
+}
+
+.command-header h2 {
+  margin: 0;
+  color: var(--white);
+  font-size: clamp(1.75rem, 4vw, 2.8rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-shadow:
+    0 2px 18px rgba(0, 0, 0, 0.42),
+    0 0 18px rgba(255, 122, 191, 0.16);
+}
+
+.command-header p:not(.command-kicker) {
+  max-width: 34rem;
+  margin: 0.65rem 0 0;
+  color: rgba(255, 243, 251, 0.74);
+  font-size: 0.92rem;
+  line-height: 1.58;
+}
+
+.command-close {
+  min-width: 3rem;
+  min-height: 2.2rem;
+  border: 1px solid rgba(255, 214, 235, 0.14);
+  border-radius: 999px;
+  color: rgba(255, 243, 251, 0.76);
+  background: rgba(255, 243, 251, 0.05);
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.command-close:hover,
+.command-close:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255, 122, 191, 0.36);
+  background: rgba(255, 122, 191, 0.08);
+  outline: none;
+}
+
+.terminal-window {
+  display: grid;
+  grid-template-rows: auto minmax(16rem, 1fr) auto;
+  min-height: min(38dvh, 25rem);
+  min-width: 0;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 243, 251, 0.055), rgba(255, 243, 251, 0.02)),
+    rgba(8, 4, 12, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 68px rgba(0, 0, 0, 0.28);
+}
+
+.terminal-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.4rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid rgba(255, 214, 235, 0.1);
+  background: rgba(255, 243, 251, 0.04);
+}
+
+.terminal-topbar span {
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 50%;
+  background: rgba(255, 122, 191, 0.86);
+  box-shadow: 0 0 12px rgba(255, 122, 191, 0.35);
+}
+
+.terminal-topbar span:nth-child(2) {
+  background: rgba(192, 132, 252, 0.86);
+}
+
+.terminal-topbar span:nth-child(3) {
+  background: rgba(125, 211, 252, 0.86);
+}
+
+.terminal-topbar strong {
+  margin-left: auto;
+  color: rgba(255, 243, 251, 0.48);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.terminal-output {
+  display: grid;
+  align-content: start;
+  gap: 0.38rem;
+  max-height: min(42dvh, 25rem);
+  overflow: hidden auto;
+  padding: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 122, 191, 0.45) rgba(255, 243, 251, 0.05);
+}
+
+.terminal-line {
+  margin: 0;
+  color: rgba(255, 243, 251, 0.78);
+  font-size: clamp(0.78rem, 1.5vw, 0.9rem);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  animation: lineIn 220ms ease both;
+}
+
+.terminal-line.boot {
+  color: rgba(125, 211, 252, 0.82);
+}
+
+.terminal-line.prompt {
+  margin-top: 0.4rem;
+  color: rgba(255, 214, 235, 0.92);
+  text-shadow: 0 0 14px rgba(255, 122, 191, 0.13);
+}
+
+.terminal-line.success {
+  color: rgba(177, 255, 219, 0.86);
+}
+
+.terminal-line.warning {
+  color: rgba(255, 214, 235, 0.94);
+}
+
+.terminal-line.error {
+  color: rgba(255, 122, 191, 0.92);
+}
+
+.terminal-prompt {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 3.15rem;
+  padding: 0 1rem;
+  border-top: 1px solid rgba(255, 214, 235, 0.1);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 122, 191, 0.08), transparent 10rem),
+    rgba(255, 243, 251, 0.035);
+}
+
+.terminal-prompt span {
+  color: rgba(125, 211, 252, 0.82);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.terminal-prompt input {
+  min-width: 0;
+  width: 100%;
+  min-height: 2.6rem;
+  border: 0;
+  outline: 0;
+  color: var(--white);
+  background: transparent;
+  font: 800 0.94rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  caret-color: var(--pink);
+}
+
+.terminal-prompt input::placeholder {
+  color: rgba(255, 214, 235, 0.48);
+}
+
+.command-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: rgba(255, 243, 251, 0.44);
+  font-size: 0.68rem;
+  letter-spacing: 0.035em;
+}
+
+.command-meta span {
+  padding: 0.34rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 243, 251, 0.04);
+}
+
+.command-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-content: start;
+  gap: 0.55rem;
+  min-height: 0;
+  overflow: hidden auto;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 122, 191, 0.45) rgba(255, 243, 251, 0.05);
+}
+
+.command-chip {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4rem;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid rgba(255, 214, 235, 0.1);
+  border-radius: 16px;
+  color: var(--white);
+  background: rgba(255, 243, 251, 0.04);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.command-chip strong {
+  color: rgba(255, 243, 251, 0.94);
+  font-size: 0.82rem;
+}
+
+.command-chip small {
+  color: rgba(255, 243, 251, 0.58);
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.command-chip.active,
+.command-chip:hover,
+.command-chip:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(125, 211, 252, 0.32);
+  background:
+    linear-gradient(135deg, rgba(255, 122, 191, 0.09), rgba(125, 211, 252, 0.05)),
+    rgba(255, 243, 251, 0.055);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.24),
+    0 0 28px rgba(125, 211, 252, 0.08);
+  outline: none;
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes commandIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateX(-50%) translateY(0.8rem) scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes auraDrift {
+  to {
+    opacity: 0.42;
+    transform: translateX(14%);
+  }
+}
+
+@keyframes terminalTear {
+  0%,
+  87%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.18;
+  }
+
+  88% {
+    transform: translate3d(-6px, 0, 0);
+    opacity: 0.34;
+  }
+
+  89% {
+    transform: translate3d(5px, 0, 0);
+    opacity: 0.22;
+  }
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .command-center {
+    inset: 0.75rem;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: calc(100dvh - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+    border-radius: 24px;
+    transform: none;
+  }
+
+  .command-header {
+    align-items: flex-start;
+  }
+
+  .terminal-window {
+    min-height: 0;
+  }
+
+  .terminal-prompt {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+    padding-block: 0.45rem;
+  }
+
+  .terminal-prompt span {
+    white-space: normal;
+  }
+
+  .command-meta {
+    display: none;
+  }
+
+  .command-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 32dvh;
+  }
+}
+
+@media (max-width: 420px) {
+  .command-center {
+    padding: 0.85rem;
+    border-radius: 20px;
+  }
+
+  .command-header h2 {
+    font-size: 1.55rem;
+  }
+
+  .command-header p:not(.command-kicker) {
+    font-size: 0.82rem;
+  }
+
+  .command-grid {
+    grid-template-columns: 1fr;
+    max-height: 30dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command-backdrop,
+  .command-center,
+  .command-aura,
+  .command-tear,
+  .terminal-line,
+  .command-chip {
+    animation: none;
+  }
+
+  .command-center {
+    filter: none;
+  }
+
+  .command-chip,
+  .command-close {
+    transition: none;
+  }
+}

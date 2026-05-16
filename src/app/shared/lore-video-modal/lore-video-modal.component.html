@@ -1,0 +1,68 @@
+@if (isOpen) {
+  <div class="lore-backdrop" role="presentation" (click)="close('closed')"></div>
+
+  <section
+    #loreDialog
+    class="lore-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lore-title"
+    aria-describedby="lore-description"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="lore-header">
+      <div>
+        <span>LORE TRANSMISSION // JULIA.DEV</span>
+        <h2 id="lore-title">Origin Story Archive</h2>
+        <p id="lore-description">julia_origin_story.mp4 · duration 00:40</p>
+      </div>
+
+      <button type="button" class="lore-close" aria-label="Close lore transmission" (click)="close('closed')">
+        Close
+      </button>
+    </header>
+
+    <div class="lore-screen" [class.playing]="hasStarted">
+      <video
+        #loreVideo
+        preload="metadata"
+        playsinline
+        [muted]="isMuted"
+        (timeupdate)="onTimeUpdate()"
+        (ended)="onEnded()"
+      >
+        <source [src]="videoSrc" type="video/mp4" />
+      </video>
+
+      @if (!hasStarted) {
+        <div class="lore-start">
+          <p>&gt; origin file detected.</p>
+          <p>&gt; memory archive loaded.</p>
+          <p>&gt; start transmission?</p>
+
+          <div class="lore-start-actions">
+            <button #playButton type="button" (click)="startTransmission()">
+              Play Lore File
+            </button>
+            <button type="button" class="secondary" (click)="close('closed')">
+              Cancel
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (hasStarted) {
+        <div class="lore-controls" aria-label="Lore transmission controls">
+          <button type="button" (click)="toggleMute()">
+            {{ isMuted ? 'Unmute' : 'Mute' }}
+          </button>
+          <button type="button" (click)="skip()">Skip</button>
+        </div>
+
+        <div class="lore-progress" aria-hidden="true">
+          <span [style.width.%]="progress"></span>
+        </div>
+      }
+    </div>
+  </section>
+}

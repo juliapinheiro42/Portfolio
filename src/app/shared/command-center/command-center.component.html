@@ -1,0 +1,83 @@
+@if (isOpen) {
+  <div class="command-backdrop" (click)="close()" aria-hidden="true"></div>
+
+  <section
+    #panel
+    class="command-center"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="command-title"
+    aria-describedby="command-description"
+  >
+    <div class="command-aura" aria-hidden="true"></div>
+    <div class="command-scan" aria-hidden="true"></div>
+    <div class="command-tear" aria-hidden="true"></div>
+
+    <header class="command-header">
+      <div>
+        <p class="command-kicker">julia.dev terminal access</p>
+        <h2 id="command-title">Command Center</h2>
+        <p id="command-description">Run system commands, inspect modules and open transmission channels.</p>
+      </div>
+
+      <button type="button" class="command-close" aria-label="Close command center" (click)="close()">
+        Esc
+      </button>
+    </header>
+
+    <div class="terminal-window" aria-live="polite">
+      <div class="terminal-topbar" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <strong>julia.dev/runtime</strong>
+      </div>
+
+      <div #terminalOutput class="terminal-output">
+        @for (line of terminalLines; track $index) {
+          <p class="terminal-line" [class]="line.kind">
+            {{ line.text }}
+          </p>
+        }
+      </div>
+
+      <label class="terminal-prompt">
+        <span>julia.dev&#64;portfolio:~$</span>
+        <input
+          #promptInput
+          type="text"
+          [value]="commandInput"
+          (input)="updateCommandInput(promptInput.value)"
+          (keydown.enter)="runTypedCommand()"
+          placeholder="type /help"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Type a command"
+        />
+      </label>
+    </div>
+
+    <div class="command-meta" aria-hidden="true">
+      <span>ctrl/⌘ + k opens</span>
+      <span>enter runs</span>
+      <span>esc closes</span>
+      <span>↑↓ selects chips</span>
+    </div>
+
+    <div class="command-grid" aria-label="Available commands">
+      @for (command of availableCommands; track command.command; let index = $index) {
+        <button
+          type="button"
+          class="command-chip"
+          [class.active]="activeCommandIndex === index"
+          (mouseenter)="setActiveCommandIndex(index)"
+          (focus)="setActiveCommandIndex(index)"
+          (click)="runCommand(command.command)"
+        >
+          <strong>{{ command.label }}</strong>
+          <small>{{ command.description }}</small>
+        </button>
+      }
+    </div>
+  </section>
+}

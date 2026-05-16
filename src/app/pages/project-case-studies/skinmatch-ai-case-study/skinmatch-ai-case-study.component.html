@@ -1,0 +1,240 @@
+<main class="case-study-page">
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+
+    <div class="case-shell">
+      <a class="back-link" routerLink="/">Back to Portfolio</a>
+
+      <div class="case-hero-grid">
+        <div class="hero-copy">
+          <span class="case-kicker">case study</span>
+          <h1 id="case-title">SkinMatch AI</h1>
+          <p class="case-subtitle">AI-assisted skincare recommendation prototype.</p>
+          <p class="case-description">
+            SkinMatch AI was born from a simple but common problem: skincare recommendations are everywhere,
+            but truly personal guidance is hard to find.
+          </p>
+
+          <div class="case-tags" aria-label="Project tags">
+            @for (tag of tags; track tag) {
+              <span>{{ tag }}</span>
+            }
+          </div>
+
+          <div class="case-actions">
+            <a [href]="repositoryUrl" target="_blank" rel="noopener noreferrer">View Code</a>
+            <a routerLink="/">Back to Portfolio</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Project positioning">
+          <span class="panel-status">prototype status</span>
+          <strong>Decision-support product experiment</strong>
+          <p>
+            Built to explore personalization, explainability and full-stack architecture in an AI-assisted product flow.
+          </p>
+          <div class="panel-note">
+            <span>responsible scope</span>
+            <p>Not a medical or dermatological tool. It supports product discovery and decision-making.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-shell content-shell">
+    <section class="case-section intro-section" aria-labelledby="overview-title">
+      <div class="section-heading">
+        <span>01</span>
+        <h2 id="overview-title">Overview</h2>
+      </div>
+      <div class="reading-card">
+        <p>
+          SkinMatch AI is a full stack AI-assisted product prototype created to explore personalized skincare
+          recommendations. The project was inspired by the overwhelming amount of skincare content on social media:
+          ads, influencer reviews, product launches and recommendations that often feel generic or disconnected from
+          each person’s real skin needs.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section split-section" aria-labelledby="problem-title">
+      <div class="section-heading">
+        <span>02</span>
+        <h2 id="problem-title">The Problem</h2>
+      </div>
+      <div class="two-column-copy">
+        <p>
+          Social media makes skincare discovery easier, but also more confusing. Users are constantly exposed to
+          product recommendations, sponsored content and reviews, but it is difficult to know whether a product is
+          compatible with their skin type, concerns, routine or sensitivities.
+        </p>
+        <p>
+          A product that works well for one person may cause irritation, acne, oiliness, dryness or no visible result
+          for another. SkinMatch AI was created to explore how technology could reduce this uncertainty.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section split-section" aria-labelledby="why-title">
+      <div class="section-heading">
+        <span>03</span>
+        <h2 id="why-title">Why I Built It</h2>
+      </div>
+      <div class="reading-card">
+        <p>
+          I built SkinMatch AI because I personally felt this problem. I often saw skincare products being recommended
+          online, but I did not have a clear way to understand if they made sense for my own skin. That frustration
+          became the starting point for a product experiment focused on personalization, explainability and decision
+          support.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section split-section" aria-labelledby="solution-title">
+      <div class="section-heading">
+        <span>04</span>
+        <h2 id="solution-title">The Solution</h2>
+      </div>
+      <div class="reading-card highlighted-card">
+        <p>
+          The solution is a guided recommendation experience where the user provides information about their skin
+          profile, concerns and preferences. The system can then process this context and generate more personalized
+          suggestions or analysis, helping the user understand why a product may or may not be a good fit.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section" aria-labelledby="flow-title">
+      <div class="section-heading">
+        <span>05</span>
+        <h2 id="flow-title">User Flow</h2>
+      </div>
+      <div class="step-grid">
+        @for (step of userFlow; track step.number) {
+          <article class="step-card">
+            <span>{{ step.number }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="case-section" aria-labelledby="architecture-title">
+      <div class="section-heading">
+        <span>06</span>
+        <h2 id="architecture-title">Architecture</h2>
+      </div>
+      <div class="architecture-card">
+        <ol class="architecture-flow" aria-label="Architecture flow">
+          @for (item of architectureFlow; track item) {
+            <li>{{ item }}</li>
+          }
+        </ol>
+        <p>
+          The architecture was designed to separate the interface from the recommendation logic, making the project
+          easier to evolve into a real API-based product.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section" aria-labelledby="technical-title">
+      <div class="section-heading">
+        <span>07</span>
+        <h2 id="technical-title">Technical Approach</h2>
+      </div>
+      <div class="technical-grid">
+        @for (card of technicalCards; track card.title) {
+          <article class="technical-card">
+            <h3>{{ card.title }}</h3>
+            <ul>
+              @for (item of card.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="case-section list-section" aria-labelledby="features-title">
+      <div class="section-heading">
+        <span>08</span>
+        <h2 id="features-title">Main Features</h2>
+      </div>
+      <ul class="feature-list">
+        @for (feature of features; track feature) {
+          <li>{{ feature }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="case-section split-section" aria-labelledby="challenges-title">
+      <div class="section-heading">
+        <span>09</span>
+        <h2 id="challenges-title">Challenges</h2>
+      </div>
+      <div class="challenge-layout">
+        <ul class="feature-list compact">
+          @for (challenge of challenges; track challenge) {
+            <li>{{ challenge }}</li>
+          }
+        </ul>
+        <div class="reading-card">
+          <p>
+            One of the main challenges was positioning the project responsibly. Since skincare can involve sensitive
+            personal concerns, the product should not pretend to replace professional dermatological advice. The goal
+            is to support decision-making, not to diagnose or prescribe.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section list-section" aria-labelledby="learned-title">
+      <div class="section-heading">
+        <span>10</span>
+        <h2 id="learned-title">What I Learned</h2>
+      </div>
+      <ul class="feature-list">
+        @for (learning of learnings; track learning) {
+          <li>{{ learning }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="case-section list-section" aria-labelledby="future-title">
+      <div class="section-heading">
+        <span>11</span>
+        <h2 id="future-title">Future Improvements</h2>
+      </div>
+      <ul class="feature-list">
+        @for (improvement of futureImprovements; track improvement) {
+          <li>{{ improvement }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="case-section final-section" aria-labelledby="summary-title">
+      <div class="section-heading">
+        <span>12</span>
+        <h2 id="summary-title">Final Summary</h2>
+      </div>
+      <div class="final-card">
+        <p>
+          SkinMatch AI helped me explore how full stack development, AI-assisted logic and product thinking can work
+          together to turn overwhelming information into a clearer and more personalized decision-making experience.
+        </p>
+        <p>
+          It is a prototype, but it represents the kind of product I enjoy building: useful, structured, technically
+          expandable and based on a real user problem.
+        </p>
+        <div class="case-actions">
+          <a [href]="repositoryUrl" target="_blank" rel="noopener noreferrer">View Code</a>
+          <a routerLink="/">Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

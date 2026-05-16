@@ -1,0 +1,16 @@
+<div class="interactive-background" aria-hidden="true">
+  <div class="ambient-layer ambient-far"></div>
+  <div class="ambient-layer ambient-mid"></div>
+  <div class="ambient-cursor-light"></div>
+
+  <div class="ambient-particles">
+    <span
+      *ngFor="let particle of particles"
+      [style.--particle-x]="particle.x + '%'"
+      [style.--particle-y]="particle.y + '%'"
+      [style.--particle-size]="particle.size + 'rem'"
+      [style.--particle-delay]="particle.delay + 's'"
+      [style.--particle-depth]="particle.depth"
+    ></span>
+  </div>
+</div>

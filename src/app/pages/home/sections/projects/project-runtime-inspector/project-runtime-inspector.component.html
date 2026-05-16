@@ -1,0 +1,373 @@
+<div class="runtime-backdrop" role="presentation" (click)="close()"></div>
+
+<section
+  #runtimeDialog
+  class="runtime-inspector"
+  [class.simulation-active]="simulationActive"
+  role="dialog"
+  aria-modal="true"
+  tabindex="-1"
+  [attr.aria-label]="'Project inspector for ' + project.title"
+  (click)="close()"
+>
+  <div #runtimeShell class="runtime-shell" (click)="$event.stopPropagation()">
+    <header class="runtime-header">
+      <div class="runtime-title-block">
+        <span class="runtime-kicker">MISSION REPORT</span>
+        <p class="runtime-module">{{ project.serviceName }}</p>
+        <h2>{{ project.caseLabel }} — {{ project.title }}</h2>
+        <div class="runtime-meta" aria-label="Project metadata">
+          <span>{{ project.type }}</span>
+          <span>{{ project.projectStatus }}</span>
+          <span>Complexity: {{ project.complexity }}</span>
+          <span>{{ project.health }}</span>
+        </div>
+      </div>
+
+      <button type="button" class="close-button" aria-label="Close project inspector" (click)="close()">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div #inspectorLayout class="inspector-layout">
+      <aside #inspectorSidebar class="inspector-sidebar" aria-label="Project summary">
+        <article class="sidebar-card overview-card">
+          <span class="panel-label">mission brief</span>
+          <p>{{ project.problem }}</p>
+        </article>
+
+        <article class="sidebar-card status-card">
+          <span class="panel-label">status</span>
+          <strong>{{ project.projectStatus }}</strong>
+          <small>{{ project.inspection.focus }}</small>
+        </article>
+
+        <article class="sidebar-card">
+          <span class="panel-label">stack</span>
+          <div class="sidebar-tags">
+            @for (tag of project.technicalBreakdown.stack.slice(0, 8); track tag) {
+              <span>{{ tag }}</span>
+            }
+          </div>
+        </article>
+
+        <article class="sidebar-card">
+          <span class="panel-label">links</span>
+          @if (project.githubUrl) {
+            <a class="repository-link" [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">
+              Open GitHub Repository
+            </a>
+          }
+        </article>
+      </aside>
+
+      <main #inspectorMain class="inspector-main">
+        <nav class="runtime-tabs" role="tablist" aria-label="Project inspector sections">
+          @for (tab of tabs; track tab.id) {
+            <button
+              type="button"
+              role="tab"
+              [id]="tab.id + '-tab'"
+              [attr.aria-controls]="tab.id + '-panel'"
+              [class.active]="activeTab === tab.id"
+              [attr.aria-selected]="activeTab === tab.id"
+              (click)="selectTab(tab.id)"
+            >
+              {{ tab.label }}
+            </button>
+          }
+        </nav>
+
+        <div class="inspector-panel">
+          @switch (activeTab) {
+            @case ('overview') {
+              <section class="tab-panel overview-panel" id="overview-panel" role="tabpanel" aria-labelledby="overview-tab">
+                <div class="copy-panel">
+                  <span class="panel-label">solution</span>
+                  <p>{{ project.solution }}</p>
+                </div>
+
+                <div class="content-grid two-columns">
+                  <article class="content-card">
+                    <span class="panel-label">my role</span>
+                    <p>{{ project.myRole }}</p>
+                  </article>
+
+                  <article class="content-card">
+                    <span class="panel-label">boss fight</span>
+                    <p>{{ project.bossFight }}</p>
+                  </article>
+                </div>
+
+                <div class="content-grid two-columns">
+                  <article class="content-card">
+                    <span class="panel-label">technical focus</span>
+                    <ul>
+                      @for (highlight of project.highlights; track highlight) {
+                        <li>{{ highlight }}</li>
+                      }
+                    </ul>
+                  </article>
+
+                  <article class="content-card">
+                    <span class="panel-label">domains</span>
+                    <div class="domain-list">
+                      @for (domain of project.domains; track domain) {
+                        <span>{{ domain }}</span>
+                      }
+                    </div>
+                  </article>
+                </div>
+
+                <div class="system-flow-panel">
+                  <span class="panel-label">system flow</span>
+                  <ol class="system-flow">
+                    @for (step of project.systemFlow; track step; let index = $index) {
+                      <li>
+                        <small>0{{ index + 1 }}</small>
+                        <strong>{{ step }}</strong>
+                      </li>
+                    }
+                  </ol>
+                </div>
+              </section>
+            }
+
+            @case ('architecture') {
+              <section class="tab-panel architecture-panel" id="architecture-panel" role="tabpanel" aria-labelledby="architecture-tab">
+                <div class="architecture-grid">
+                  <div class="runtime-map" aria-label="Animated runtime visualization">
+                    <div class="map-grid" aria-hidden="true"></div>
+
+                    <svg class="connection-layer" viewBox="0 0 720 460" preserveAspectRatio="none" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="runtimeEventPath" x1="0%" x2="100%" y1="0%" y2="0%">
+                          <stop offset="0%" stop-color="rgba(255,122,191,0)" />
+                          <stop offset="48%" stop-color="rgba(255,122,191,0.72)" />
+                          <stop offset="100%" stop-color="rgba(125,211,252,0.06)" />
+                        </linearGradient>
+                        <linearGradient id="runtimeSyncPath" x1="0%" x2="100%" y1="0%" y2="0%">
+                          <stop offset="0%" stop-color="rgba(125,211,252,0)" />
+                          <stop offset="50%" stop-color="rgba(125,211,252,0.62)" />
+                          <stop offset="100%" stop-color="rgba(192,132,252,0.08)" />
+                        </linearGradient>
+                        <linearGradient id="runtimeDataPath" x1="0%" x2="100%" y1="0%" y2="0%">
+                          <stop offset="0%" stop-color="rgba(255,214,235,0)" />
+                          <stop offset="50%" stop-color="rgba(255,214,235,0.42)" />
+                          <stop offset="100%" stop-color="rgba(125,211,252,0.04)" />
+                        </linearGradient>
+                        <linearGradient id="runtimeControlPath" x1="0%" x2="100%" y1="0%" y2="0%">
+                          <stop offset="0%" stop-color="rgba(192,132,252,0)" />
+                          <stop offset="52%" stop-color="rgba(192,132,252,0.62)" />
+                          <stop offset="100%" stop-color="rgba(255,122,191,0.08)" />
+                        </linearGradient>
+                      </defs>
+
+                      @for (path of project.inspection.paths; track path.id) {
+                        <path
+                          class="runtime-path"
+                          [class.event]="path.tone === 'event'"
+                          [class.sync]="path.tone === 'sync'"
+                          [class.data]="path.tone === 'data'"
+                          [class.control]="path.tone === 'control'"
+                          [class.priority-path]="simulationActive && path.emergency"
+                          [attr.id]="'runtime-' + path.id"
+                          [attr.d]="path.d"
+                        />
+                      }
+
+                      @for (event of project.inspection.events; track event.label) {
+                        <circle
+                          class="runtime-event"
+                          [class.priority-event]="event.emergency"
+                          [class.event-active]="simulationActive || !event.emergency"
+                          r="4"
+                          [attr.data-event]="event.label"
+                        >
+                          <animateMotion
+                            repeatCount="indefinite"
+                            [attr.dur]="(simulationActive && event.emergency ? event.duration * 0.62 : event.duration) + 's'"
+                            [attr.begin]="event.delay + 's'"
+                          >
+                            <mpath [attr.href]="'#runtime-' + event.pathId"></mpath>
+                          </animateMotion>
+                        </circle>
+                      }
+                    </svg>
+
+                    <div class="node-layer">
+                      @for (node of project.inspection.nodes; track node.id) {
+                        <article
+                          class="runtime-node"
+                          [class.broker-node]="node.kind === 'broker'"
+                          [class.database-node]="node.kind === 'database'"
+                          [class.ai-node]="node.kind === 'ai'"
+                          [class.priority-node]="simulationActive && (node.id === 'surgery' || node.id === 'actions' || node.id === 'automation' || node.id === 'command')"
+                          [style.left.%]="node.x"
+                          [style.top.%]="node.y"
+                        >
+                          <span class="node-pulse" aria-hidden="true"></span>
+                          <strong>{{ node.label }}</strong>
+                          <small>{{ node.role }}</small>
+
+                          @if (node.kind === 'broker') {
+                            <span class="broker-orbit orbit-one" aria-hidden="true"></span>
+                            <span class="broker-orbit orbit-two" aria-hidden="true"></span>
+                          }
+                        </article>
+                      }
+                    </div>
+                  </div>
+
+                  <aside class="runtime-panel" aria-label="Runtime logs and metrics">
+                    <div class="runtime-state">
+                      <span></span>
+                      <div>
+                        <strong>{{ simulationActive ? 'priority flow active' : 'system flow stable' }}</strong>
+                        <small>{{ project.inspection.focus }}</small>
+                      </div>
+                    </div>
+
+                    <button type="button" class="simulation-button" (click)="toggleSimulation()" [attr.aria-pressed]="simulationActive">
+                      {{ simulationActive ? 'Stop Simulation' : project.inspection.simulationLabel }}
+                    </button>
+
+                    <div class="metric-grid">
+                      @for (metric of project.inspection.metrics; track metric.label) {
+                        <div>
+                          <span>{{ metric.label }}</span>
+                          <strong>{{ simulationActive ? metric.active : metric.normal }}</strong>
+                        </div>
+                      }
+                    </div>
+
+                    <div class="runtime-logs" aria-live="polite">
+                      <span class="logs-label">system logs</span>
+                      @for (log of logs; track log; let index = $index) {
+                        <p [style.animation-delay.ms]="index * 90">{{ log }}</p>
+                      }
+                    </div>
+                  </aside>
+                </div>
+              </section>
+            }
+
+            @case ('technical') {
+              <section class="tab-panel technical-panel" id="technical-panel" role="tabpanel" aria-labelledby="technical-tab">
+                <div class="breakdown-summary">
+                  <article>
+                    <span>problem</span>
+                    <p>{{ project.technicalBreakdown.problem }}</p>
+                  </article>
+
+                  <article>
+                    <span>solution</span>
+                    <p>{{ project.technicalBreakdown.solution }}</p>
+                  </article>
+                </div>
+
+                <div class="breakdown-grid">
+                  <article class="breakdown-card">
+                    <span>architecture decisions</span>
+                    <ul>
+                      @for (item of project.technicalBreakdown.architectureDecisions; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </article>
+
+                  <article class="breakdown-card">
+                    <span>challenges</span>
+                    <ul>
+                      @for (item of project.technicalBreakdown.challenges; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </article>
+
+                  <article class="breakdown-card">
+                    <span>tradeoffs</span>
+                    <ul>
+                      @for (item of project.technicalBreakdown.tradeoffs; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </article>
+
+                  <article class="breakdown-card">
+                    <span>scaling</span>
+                    <ul>
+                      @for (item of project.technicalBreakdown.scaling; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </article>
+                </div>
+              </section>
+            }
+
+            @case ('stack') {
+              <section class="tab-panel stack-panel" id="stack-panel" role="tabpanel" aria-labelledby="stack-tab">
+                <div class="content-grid two-columns">
+                  <article class="content-card">
+                    <span class="panel-label">architecture blocks</span>
+                    <div class="architecture-list">
+                      @for (item of project.architecture; track item.label) {
+                        <div>
+                          <span>{{ item.label }}</span>
+                          <strong>{{ item.value }}</strong>
+                        </div>
+                      }
+                    </div>
+                  </article>
+
+                  <article class="content-card">
+                    <span class="panel-label">capabilities</span>
+                    <div class="domain-list">
+                      @for (capability of project.inspection.capabilities; track capability) {
+                        <span>{{ capability }}</span>
+                      }
+                    </div>
+                  </article>
+                </div>
+
+                <div class="stack-cloud">
+                  @for (tag of project.technicalBreakdown.stack; track tag) {
+                    <span>{{ tag }}</span>
+                  }
+                </div>
+              </section>
+            }
+
+            @case ('repository') {
+              <section class="tab-panel repository-panel" id="repository-panel" role="tabpanel" aria-labelledby="repository-tab">
+                <article class="copy-panel">
+                  <span class="panel-label">repository</span>
+                  <p>
+                    Open the source code for this project. No live demo is shown here unless a real project link is configured.
+                  </p>
+
+                  @if (project.githubUrl) {
+                    <a class="repository-link primary" [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">
+                      Open GitHub Repository
+                    </a>
+                  }
+                </article>
+
+                <div class="breakdown-flow">
+                  <span>project notes</span>
+                  <ol>
+                    @for (step of project.technicalBreakdown.messagingFlow; track step) {
+                      <li>{{ step }}</li>
+                    }
+                  </ol>
+                </div>
+              </section>
+            }
+          }
+        </div>
+      </main>
+    </div>
+  </div>
+</section>

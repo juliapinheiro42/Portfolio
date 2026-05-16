@@ -1,0 +1,123 @@
+<app-section-shell sectionId="contact" labelledBy="contact-title" variant="contact">
+  <app-section-header
+    badge="Connection ready"
+    title="Let’s build something useful, intelligent and visually memorable."
+    subtitle="I’m open to opportunities involving full stack development, backend APIs, Salesforce automation, frontend interfaces and AI-powered product prototypes."
+    titleId="contact-title"
+  />
+
+  <div class="contact-layout">
+    <form
+      class="transmission-panel"
+      appMagneticCard
+      [formGroup]="contactForm"
+      (ngSubmit)="transmitMessage()"
+      aria-describedby="contact-feedback"
+      novalidate
+    >
+      <div class="panel-topbar" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="panel-heading">
+        <p>contact channel</p>
+        <strong>{{ transmissionState === 'sent' ? 'delivered' : 'secure channel' }}</strong>
+      </div>
+
+      <label class="field">
+        <span>Name</span>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Your name"
+          autocomplete="name"
+          [attr.aria-invalid]="hasError('name')"
+          aria-describedby="name-error"
+        />
+        <small id="name-error" *ngIf="hasError('name')">{{ errorMessage('name') }}</small>
+      </label>
+
+      <label class="field">
+        <span>E-mail</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="name@example.com"
+          autocomplete="email"
+          [attr.aria-invalid]="hasError('email')"
+          aria-describedby="email-error"
+        />
+        <small id="email-error" *ngIf="hasError('email')">{{ errorMessage('email') }}</small>
+      </label>
+
+      <label class="field">
+        <span>Message</span>
+        <textarea
+          formControlName="message"
+          rows="6"
+          placeholder="Tell me about the role, project or technical challenge..."
+          [attr.aria-invalid]="hasError('message')"
+          aria-describedby="message-error"
+        ></textarea>
+        <small id="message-error" *ngIf="hasError('message')">{{ errorMessage('message') }}</small>
+      </label>
+
+      <p id="contact-feedback" class="form-feedback" role="status" aria-live="polite">
+        @if (transmissionState === 'sent') {
+          Message delivered. I’ll read it soon.
+        } @else if (transmissionState === 'error') {
+          Transmission failed. Please try again or use a direct contact link.
+        }
+      </p>
+
+      <button
+        class="transmit-button"
+        type="submit"
+        [disabled]="contactForm.invalid || isSending"
+        [class.sending]="transmissionState === 'sending'"
+        [class.sent]="transmissionState === 'sent'"
+      >
+        <span aria-hidden="true"></span>
+        {{ buttonLabel }}
+      </button>
+    </form>
+
+    <aside class="status-panel" aria-label="Status e links de contato">
+      <div class="status-card" appMagneticCard>
+        <div class="status-orbit" aria-hidden="true"></div>
+
+        <p class="status-label">
+          <span aria-hidden="true"></span>
+          Open to technical opportunities
+        </p>
+
+        <h3>Full stack, backend, Salesforce and AI prototype work.</h3>
+
+        <div class="mini-terminal" aria-label="Terminal de status">
+          <p>&gt; backend APIs</p>
+          <p>&gt; enterprise automation</p>
+          <p>&gt; intelligent product prototypes</p>
+        </div>
+      </div>
+
+      <div class="social-card" appMagneticCard>
+        <p>Project links</p>
+        <h3>View GitHub and LinkedIn for code, projects and profile context.</h3>
+
+        <div class="social-links">
+          <a
+            *ngFor="let link of socialLinks"
+            [href]="link.href"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>{{ link.label }}</span>
+            <small>{{ link.meta }}</small>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</app-section-shell>

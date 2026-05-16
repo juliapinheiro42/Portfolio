@@ -1,0 +1,393 @@
+:host {
+  --pink: #ff7abf;
+  --lilac: #c084fc;
+  --blue: #7dd3fc;
+  --white: #fff3fb;
+
+  display: block;
+}
+
+.graveyard-console {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin: 0 0 1.1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 214, 235, 0.14);
+  border-radius: 20px;
+  color: rgba(255, 243, 251, 0.78);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 122, 191, 0.11), transparent 9rem),
+    rgba(19, 11, 24, 0.72);
+  box-shadow: 0 20px 58px rgba(0, 0, 0, 0.24);
+}
+
+.graveyard-console span,
+.graveyard-console strong,
+.bug-id,
+.bug-status,
+.bug-meta,
+.lesson-panel span,
+.bug-skills span,
+.bug-card button,
+.certificate-meta,
+.death-certificate span,
+.death-certificate button,
+.death-certificate code,
+.skills-unlocked strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.graveyard-console span {
+  color: rgba(125, 211, 252, 0.86);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.graveyard-console strong {
+  color: rgba(255, 243, 251, 0.8);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.bug-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bug-card {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(1rem, 2.2vw, 1.25rem);
+  border: 1px solid rgba(255, 214, 235, 0.14);
+  border-radius: 22px 22px 14px 14px;
+  color: var(--white);
+  background:
+    linear-gradient(145deg, rgba(255, 243, 251, 0.07), rgba(125, 211, 252, 0.024)),
+    rgba(18, 9, 24, 0.9);
+  box-shadow:
+    0 26px 72px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: bugReveal 620ms ease both;
+  animation-delay: calc(var(--bug-delay) + 120ms);
+  transition: transform 190ms ease, border-color 190ms ease, box-shadow 190ms ease;
+}
+
+.bug-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.055;
+  background: repeating-linear-gradient(to bottom, transparent 0 8px, rgba(255, 243, 251, 0.42) 9px, transparent 10px);
+  pointer-events: none;
+}
+
+.bug-card::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 191, 0.58), rgba(125, 211, 252, 0.38), transparent);
+  opacity: 0.58;
+}
+
+.bug-card:hover,
+.bug-card:focus-within {
+  transform: translateY(-0.35rem);
+  border-color: rgba(255, 122, 191, 0.35);
+  box-shadow:
+    0 32px 88px rgba(0, 0, 0, 0.42),
+    0 0 34px rgba(255, 122, 191, 0.08);
+}
+
+.bug-card-glow {
+  position: absolute;
+  inset: auto -25% -40% 16%;
+  height: 10rem;
+  border-radius: 999px;
+  background: var(--lilac);
+  filter: blur(52px);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.bug-card.high .bug-card-glow {
+  background: var(--pink);
+  opacity: 0.12;
+}
+
+.bug-card-header,
+.bug-meta,
+.bug-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+}
+
+.bug-card-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bug-id {
+  color: rgba(125, 211, 252, 0.84);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+}
+
+.bug-status,
+.bug-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.46rem 0.62rem;
+  border: 1px solid rgba(255, 214, 235, 0.12);
+  border-radius: 999px;
+  color: rgba(255, 243, 251, 0.72);
+  background: rgba(255, 243, 251, 0.045);
+  font-size: 0.72rem;
+  font-weight: 820;
+}
+
+.bug-status {
+  color: rgba(177, 255, 219, 0.84);
+}
+
+.bug-card h3 {
+  margin: 0;
+  color: var(--white);
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.lesson-panel {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.78rem;
+  border: 1px solid rgba(125, 211, 252, 0.13);
+  border-radius: 15px;
+  background: rgba(125, 211, 252, 0.035);
+}
+
+.lesson-panel span {
+  color: rgba(125, 211, 252, 0.82);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lesson-panel p {
+  margin: 0;
+  color: rgba(255, 243, 251, 0.86);
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.58;
+}
+
+.bug-skills span {
+  padding: 0.44rem 0.56rem;
+  border: 1px solid rgba(255, 122, 191, 0.14);
+  border-radius: 999px;
+  color: rgba(255, 243, 251, 0.82);
+  background: rgba(255, 122, 191, 0.055);
+  font-size: 0.72rem;
+  font-weight: 780;
+}
+
+.bug-card button,
+.death-certificate button {
+  justify-self: start;
+  min-height: 2.65rem;
+  border: 1px solid rgba(255, 122, 191, 0.24);
+  border-radius: 999px;
+  padding: 0.72rem 0.9rem;
+  color: var(--white);
+  background: linear-gradient(135deg, rgba(255, 122, 191, 0.78), rgba(192, 132, 252, 0.68));
+  box-shadow: 0 14px 32px rgba(255, 122, 191, 0.15);
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.bug-card button:hover,
+.bug-card button:focus-visible,
+.death-certificate button:hover,
+.death-certificate button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(125, 211, 252, 0.14);
+  outline: 2px solid rgba(125, 211, 252, 0.78);
+  outline-offset: 3px;
+}
+
+.certificate-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9300;
+  background: rgba(8, 3, 12, 0.68);
+  backdrop-filter: blur(10px);
+}
+
+.death-certificate {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  z-index: 9301;
+  width: min(calc(100vw - 2rem), 58rem);
+  max-height: min(86dvh, 48rem);
+  overflow: hidden auto;
+  border: 1px solid rgba(255, 214, 235, 0.16);
+  border-radius: 26px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 122, 191, 0.13), transparent 14rem),
+    radial-gradient(circle at 92% 6%, rgba(125, 211, 252, 0.1), transparent 14rem),
+    rgba(19, 11, 24, 0.96);
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.52),
+    0 0 46px rgba(255, 122, 191, 0.1);
+  transform: translate(-50%, -50%);
+}
+
+.certificate-shell {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+}
+
+.death-certificate header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 214, 235, 0.12);
+}
+
+.death-certificate header span,
+.death-certificate article span,
+.skills-unlocked > span {
+  color: rgba(125, 211, 252, 0.84);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.death-certificate h3 {
+  margin: 0.4rem 0 0;
+  color: var(--white);
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  line-height: 1;
+}
+
+.certificate-meta,
+.skills-unlocked div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.certificate-meta span,
+.skills-unlocked strong {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid rgba(255, 214, 235, 0.12);
+  border-radius: 999px;
+  color: rgba(255, 243, 251, 0.78);
+  background: rgba(255, 243, 251, 0.045);
+  font-size: 0.78rem;
+}
+
+.certificate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.certificate-grid article,
+.skills-unlocked {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(255, 214, 235, 0.11);
+  border-radius: 18px;
+  background: rgba(255, 243, 251, 0.04);
+}
+
+.certificate-grid p {
+  margin: 0;
+  color: rgba(255, 243, 251, 0.86);
+  font-size: 0.96rem;
+  line-height: 1.68;
+}
+
+.certificate-grid code {
+  display: block;
+  color: rgba(255, 214, 235, 0.94);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@keyframes bugReveal {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .bug-grid,
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .graveyard-console {
+    align-items: flex-start;
+  }
+
+  .bug-card button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .death-certificate {
+    inset: 0.75rem;
+    width: auto;
+    max-height: calc(100dvh - 1.5rem);
+    transform: none;
+  }
+
+  .death-certificate header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bug-card,
+  .bug-card button,
+  .death-certificate button {
+    animation: none;
+    transition: none;
+  }
+
+  .bug-card:hover {
+    transform: none;
+  }
+}

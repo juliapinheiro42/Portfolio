@@ -1,0 +1,94 @@
+<section class="intro-screen" [class.panic]="isPanic" [class.critical]="isCritical" [class.leaving]="isLeaving">
+  <div class="screen-noise"></div>
+  <div class="scanlines"></div>
+  <div class="glitch-flash"></div>
+  <div class="blackout-flash" aria-hidden="true">
+    <span>recovering visual core...</span>
+  </div>
+  <div class="collapse-bars" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="screen-tear" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="background-grid" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+
+  <div class="aura aura-pink" aria-hidden="true"></div>
+  <div class="aura aura-lilac" aria-hidden="true"></div>
+  <div class="aura aura-blue" aria-hidden="true"></div>
+
+  <div class="sparkles" aria-hidden="true">
+    <span class="star star-one"></span>
+    <span class="star star-two"></span>
+    <span class="star star-three"></span>
+    <span class="heart heart-one"></span>
+    <span class="heart heart-two"></span>
+    <span class="bubble bubble-one"></span>
+    <span class="bubble bubble-two"></span>
+    <span class="cloud cloud-one"></span>
+    <span class="cloud cloud-two"></span>
+  </div>
+
+  <div class="intro-shell">
+    <div class="terminal-card" role="status" aria-live="polite">
+      <div class="terminal-topbar" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="terminal-header">
+        <span class="terminal-label">julia.dev boot sequence</span>
+        <span class="terminal-chip">sparkle mode</span>
+      </div>
+
+      <div class="terminal-lines">
+        <p
+          *ngFor="let line of bootLines"
+          class="terminal-line"
+          [ngClass]="line.delayClass"
+        >
+          {{ line.text }}
+        </p>
+      </div>
+
+      <h1 class="glitch-text" data-text="Julia.dev is glitching...">
+        Julia.dev is glitching...
+      </h1>
+
+      <div class="loading-track" aria-hidden="true">
+        <span></span>
+      </div>
+      <p class="loading-caption">opening portfolio universe...</p>
+    </div>
+
+    <div class="mascot-flight">
+      <div class="mascot">
+        <div class="mascot-shadow"></div>
+
+        <div class="ear ear-left"></div>
+        <div class="ear ear-right"></div>
+
+        <div class="bow">
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="face">
+          <span class="fluff fluff-left"></span>
+          <span class="fluff fluff-right"></span>
+          <span class="eye eye-left"></span>
+          <span class="eye eye-right"></span>
+          <span class="blush blush-left"></span>
+          <span class="blush blush-right"></span>
+          <span class="mouth"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

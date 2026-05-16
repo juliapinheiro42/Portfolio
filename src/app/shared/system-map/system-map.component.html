@@ -1,0 +1,111 @@
+<div class="system-map" aria-label="Mapa visual de arquitetura fullstack distribuída">
+  <div class="map-atmosphere" aria-hidden="true"></div>
+  <div class="map-haze" aria-hidden="true"></div>
+  <div class="map-grid" aria-hidden="true"></div>
+
+  <div class="system-fragments" aria-hidden="true">
+    <span class="fragment fragment-queue">event.bus</span>
+    <span class="fragment fragment-health">health.signal</span>
+    <span class="fragment fragment-contract">trace</span>
+    <span class="fragment fragment-latency">p95 · 42ms</span>
+  </div>
+
+  <svg class="connection-layer" viewBox="0 0 720 520" role="img" aria-label="Fluxos entre frontend, API, mensageria, microsserviços e dados">
+    <defs>
+      <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#ff7abf" stop-opacity="0.08" />
+        <stop offset="48%" stop-color="#fff3fb" stop-opacity="0.34" />
+        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.12" />
+      </linearGradient>
+
+      <filter id="softConnectionGlow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    @for (connection of connections; track connection.id) {
+      <path
+        [attr.id]="connection.id"
+        class="system-path"
+        [class.high]="connection.intensity === 'high'"
+        [class.medium]="connection.intensity === 'medium'"
+        [class.low]="connection.intensity === 'low'"
+        [class.related]="isRelatedConnection(connection)"
+        [attr.d]="connection.path"
+      />
+    }
+
+    <g class="broken-signal-layer" aria-hidden="true">
+      <path class="broken-path far" d="M28 92 C112 42 184 64 254 118" />
+      <path class="broken-path far" d="M490 58 C566 30 650 58 718 112" />
+      <path class="broken-path mid" d="M36 382 C142 450 254 430 332 364" />
+      <path class="broken-path mid" d="M516 318 C604 284 660 304 718 358" />
+      <path class="signal-shard shard-one" d="M184 226 L236 226" />
+      <path class="signal-shard shard-two" d="M372 118 L430 118" />
+      <path class="signal-shard shard-three" d="M504 440 L572 440" />
+    </g>
+
+    @for (particle of particles; track particle.id) {
+      <circle
+        class="event-particle"
+        [class.pink]="particle.tone === 'pink'"
+        [class.blue]="particle.tone === 'blue'"
+        [class.lilac]="particle.tone === 'lilac'"
+        [class.white]="particle.tone === 'white'"
+        [attr.r]="particle.size"
+      >
+        <animateMotion
+          rotate="auto"
+          repeatCount="indefinite"
+          [attr.dur]="particle.duration + 's'"
+          [attr.begin]="particle.delay + 's'"
+        >
+          <mpath [attr.href]="'#' + particle.connectionId"></mpath>
+        </animateMotion>
+      </circle>
+    }
+  </svg>
+
+  <div class="node-layer">
+    @for (node of nodes; track node.id) {
+      <button
+        type="button"
+        class="system-node"
+        [class.primary-node]="node.priority === 'primary'"
+        [class.quiet-node]="node.priority === 'quiet'"
+        [class.related]="isRelatedNode(node)"
+        [class.dimmed]="activeNodeId && !isRelatedNode(node)"
+        [class.queue-node]="node.kind === 'queue'"
+        [class.database-node]="node.kind === 'database'"
+        [class.observability-node]="node.kind === 'observability'"
+        [style.--node-x]="node.x + '%'"
+        [style.--node-y]="node.y + '%'"
+        (mouseenter)="activateNode(node.id)"
+        (focus)="activateNode(node.id)"
+        (mouseleave)="clearActiveNode()"
+        (blur)="clearActiveNode()"
+        [attr.aria-label]="node.label + ': ' + node.detail"
+      >
+        <span class="node-orbit" aria-hidden="true"></span>
+        <span class="node-core" aria-hidden="true"></span>
+        <span class="node-label">{{ node.label }}</span>
+        <span class="node-detail">{{ node.detail }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="service-cluster" aria-hidden="true">
+    <span>Scheduling</span>
+    <span>Laboratory</span>
+    <span>Patients</span>
+  </div>
+
+  <div class="ambient-rings" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
+</div>

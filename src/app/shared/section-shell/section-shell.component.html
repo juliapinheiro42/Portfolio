@@ -1,0 +1,43 @@
+<section
+  class="section-shell {{ variant }} state-{{ stateConfig.mood }} {{ extraClass }}"
+  [id]="sectionId"
+  [attr.aria-labelledby]="labelledBy"
+  [ngStyle]="stateStyleVars"
+>
+  <div class="section-grid" aria-hidden="true"></div>
+  <div class="section-scanline" aria-hidden="true"></div>
+  <div class="section-depth-light" aria-hidden="true"></div>
+  <div class="section-signal-tear" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="state-field" aria-hidden="true">
+    <span class="state-ring ring-one"></span>
+    <span class="state-ring ring-two"></span>
+    <span class="state-line line-one"></span>
+    <span class="state-line line-two"></span>
+    <span class="state-node node-one"></span>
+    <span class="state-node node-two"></span>
+    <span class="state-node node-three"></span>
+  </div>
+
+  <div class="section-aura aura-pink" aria-hidden="true"></div>
+  <div class="section-aura aura-blue" aria-hidden="true"></div>
+  <div class="section-aura aura-lilac" aria-hidden="true"></div>
+
+  <div class="section-particles" aria-hidden="true">
+    <span class="spark spark-one"></span>
+    <span class="spark spark-two"></span>
+    <span class="spark spark-three"></span>
+    <span class="pixel-heart heart-one"></span>
+    <span class="pixel-heart heart-two"></span>
+    <span class="signal-orb orb-one"></span>
+    <span class="signal-orb orb-two"></span>
+  </div>
+
+  <div class="section-inner">
+    <p class="section-stage" aria-hidden="true">{{ stateConfig.stage }}</p>
+    <ng-content />
+  </div>
+</section>

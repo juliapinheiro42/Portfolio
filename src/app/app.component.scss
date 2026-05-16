@@ -1,0 +1,125 @@
+main {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+main.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+main.chaos-mode {
+  animation: chaosJitter 180ms steps(2, end) infinite;
+}
+
+.chaos-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9400;
+  pointer-events: none;
+  opacity: 0.38;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 122, 191, 0.12), transparent) 0 22% / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.12), transparent) 0 58% / 100% 1px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 7px, rgba(255, 243, 251, 0.06) 8px, transparent 9px);
+  mix-blend-mode: screen;
+  animation: chaosScan 520ms steps(3, end) infinite;
+}
+
+.secret-toast {
+  position: fixed;
+  right: clamp(0.85rem, 3vw, 1.4rem);
+  bottom: clamp(0.85rem, 3vw, 1.4rem);
+  z-index: 9700;
+  display: grid;
+  gap: 0.28rem;
+  width: min(calc(100vw - 1.7rem), 22rem);
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(125, 211, 252, 0.28);
+  border-radius: 18px;
+  color: #fff3fb;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 122, 191, 0.18), transparent 8rem),
+    linear-gradient(145deg, rgba(255, 243, 251, 0.1), rgba(125, 211, 252, 0.04)),
+    rgba(19, 11, 24, 0.92);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.42),
+    0 0 36px rgba(125, 211, 252, 0.12);
+  backdrop-filter: blur(16px) saturate(1.12);
+  animation: toastIn 260ms ease both;
+}
+
+.secret-toast span,
+.secret-toast small {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.secret-toast span {
+  color: rgba(125, 211, 252, 0.86);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.secret-toast strong {
+  font-size: 1rem;
+}
+
+.secret-toast small {
+  color: rgba(255, 243, 251, 0.68);
+  line-height: 1.45;
+}
+
+@keyframes chaosJitter {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    filter: none;
+  }
+
+  30% {
+    transform: translate3d(1px, -1px, 0);
+    filter: hue-rotate(3deg);
+  }
+
+  60% {
+    transform: translate3d(-1px, 1px, 0);
+    filter: hue-rotate(-3deg);
+  }
+}
+
+@keyframes chaosScan {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  45% {
+    transform: translate3d(7px, 0, 0);
+  }
+
+  62% {
+    transform: translate3d(-5px, 0, 0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main.chaos-mode,
+  .chaos-overlay,
+  .secret-toast {
+    animation: none;
+  }
+
+  main.chaos-mode {
+    transform: none;
+    filter: none;
+  }
+}

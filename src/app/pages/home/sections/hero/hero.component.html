@@ -1,0 +1,76 @@
+<app-section-shell sectionId="home" labelledBy="hero-title" variant="hero">
+  @if (isReconstructing) {
+    <app-hero-reconstruction (finished)="finishReconstruction()" />
+  }
+
+  <div class="hero-inner" [class.reconstructing]="isReconstructing">
+    <div class="hero-copy">
+      <p class="system-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        &gt; systems with logic, identity and intention
+      </p>
+
+      <h1 id="hero-title" class="hero-title" data-text="Hi, I’m Julia Pinheiro.">
+        Hi, I’m Julia.
+      </h1>
+
+      <p class="hero-role"> Full Stack Developer Jr. building APIs, microservices and intelligent web applications.</p>
+
+      <div class="hero-system-chips" aria-label="Especialidades principais">
+        <span>.NET</span>
+        <span>C#</span>
+        <span>Python</span>
+        <span>TypeScript</span>
+        <span>Microservices</span>
+        <span>APIs</span>
+        <span>AI</span>
+      </div>
+
+      <p class="hero-description">
+
+        Currently working with .NET 9, MongoDB, RabbitMQ,
+        Angular and TypeScript, with a focus on clean architecture,
+        REST APIs, authentication, automation and AI-assisted development.
+      </p>
+
+      <div class="hero-actions" aria-label="Ações principais">
+        <a class="hero-button primary" href="#projects">
+          View Projects
+        </a>
+        <a class="hero-button secondary" href="#contact">
+          Contact Me
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-label="Infraestrutura distribuída abstrata em segundo plano">
+      <app-system-map class="architecture-map" />
+
+      <div class="status-pill" aria-hidden="true">
+        ghost infrastructure online
+      </div>
+
+      <div class="resting-mascot" aria-label="Mascote nuvem-cachorrinho observando a interface">
+        <div class="mascot-aura" aria-hidden="true"></div>
+        <div class="mascot-body">
+          <div class="mascot-paw paw-left"></div>
+          <div class="mascot-paw paw-right"></div>
+          <div class="mascot-ear ear-left"></div>
+          <div class="mascot-ear ear-right"></div>
+          <div class="mascot-bow">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="mascot-face">
+            <span class="mascot-shine"></span>
+            <span class="mascot-eye eye-left"></span>
+            <span class="mascot-eye eye-right"></span>
+            <span class="mascot-blush blush-left"></span>
+            <span class="mascot-blush blush-right"></span>
+            <span class="mascot-mouth"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-section-shell>

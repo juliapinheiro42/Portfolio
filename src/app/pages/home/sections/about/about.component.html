@@ -1,0 +1,92 @@
+<app-section-shell sectionId="about" labelledBy="about-title" variant="about">
+  <app-section-header
+    badge="User data loaded"
+    title="About"
+    subtitle="Full Stack Developer focused on APIs, intelligent systems and expressive interfaces."
+    titleId="about-title"
+    [compactTitle]="true"
+  />
+
+  <div class="profile-layout">
+    <article class="dossier-card" appMagneticCard>
+      <div class="card-topbar" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="dossier-content">
+        <p class="panel-label">developer profile</p>
+        <h3>Backend architecture, frontend experience and applied AI.</h3>
+
+        <p>
+          I’m Julia Pinheiro de Farias, a Full Stack Developer Jr.
+          based in Rio de Janeiro, Brazil.
+        </p>
+
+        <p>
+          I work with backend systems, web applications and automation flows, mainly using
+          .NET, Python, TypeScript, Angular and React.
+          My current experience includes building and maintaining microservice-based
+          applications, integrating REST APIs, working with asynchronous messaging using
+          RabbitMQ, implementing JWT authentication and structuring services with Clean
+          Architecture.
+
+          I’m especially interested in backend architecture, AI-assisted products,
+          automation and full stack applications that combine useful logic with clear
+          interfaces.
+        </p>
+
+        <p>
+          My current focus is turning product ideas into structured full stack systems,
+            from backend APIs and async communication to frontend interfaces
+            and AI-assisted workflows.
+        </p>
+      </div>
+    </article>
+
+    <aside class="terminal-profile" appMagneticCard aria-label="Terminal com dados de perfil">
+      <div class="terminal-header">
+        <div class="window-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span>user.profile.ts</span>
+        <strong>synced</strong>
+      </div>
+
+      <pre><code><span class="keyword">const</span> <span class="variable">USER_PROFILE</span> = &#123;
+<span *ngFor="let line of profileLines">
+  <span class="property">{{ line.key }}</span>: <span class="string">{{ line.value }}</span>,
+</span>&#125;;</code></pre>
+    </aside>
+  </div>
+
+  <div class="stats-panel" aria-label="Status do sistema">
+    <div class="stat-chip" *ngFor="let stat of stats">
+      <span class="stat-light" aria-hidden="true"></span>
+      <strong>{{ stat.value }}</strong>
+      <span>{{ stat.label }}</span>
+    </div>
+  </div>
+
+  <div id="stack" class="modules-grid skill-network" aria-label="Módulos de habilidades carregados">
+    <span class="skill-link link-one" aria-hidden="true"></span>
+    <span class="skill-link link-two" aria-hidden="true"></span>
+    <span class="skill-pulse pulse-one" aria-hidden="true"></span>
+    <span class="skill-pulse pulse-two" aria-hidden="true"></span>
+
+    <article class="module-card" appMagneticCard *ngFor="let module of modules">
+      <div class="module-glow" aria-hidden="true"></div>
+      <p>{{ module.label }}</p>
+      <h3>{{ module.title }}</h3>
+      <ul>
+        <li *ngFor="let item of module.items">
+          <span aria-hidden="true"></span>
+          {{ item }}
+        </li>
+      </ul>
+    </article>
+  </div>
+</app-section-shell>

@@ -1,1 +1,227 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #130b18;
+  --pink: #ff7abf;
+  --lilac: #c084fc;
+  --blue: #7dd3fc;
+  --white: #fff3fb;
+  --soft-pink: #ffd6eb;
+  --ink: #2d1735;
+  --glass-border: rgba(255, 214, 235, 0.16);
+  --glass-bg: rgba(19, 11, 24, 0.82);
+  --surface-primary: rgba(24, 13, 30, 0.9);
+  --surface-secondary: rgba(22, 12, 28, 0.82);
+  --surface-muted: rgba(255, 243, 251, 0.045);
+  --surface-active: rgba(255, 122, 191, 0.12);
+  --border-muted: rgba(255, 214, 235, 0.14);
+  --border-active: rgba(125, 211, 252, 0.36);
+  --text-muted: rgba(255, 243, 251, 0.76);
+  --text-soft: rgba(255, 243, 251, 0.88);
+  --glow-low: 0 16px 44px rgba(255, 122, 191, 0.07);
+  --glow-medium: 0 22px 64px rgba(255, 122, 191, 0.11);
+  --glow-focus: 0 22px 58px rgba(255, 122, 191, 0.22), 0 0 28px rgba(125, 211, 252, 0.1);
+  --glow-pink: 0 20px 58px rgba(255, 122, 191, 0.09);
+  --glow-blue: 0 0 28px rgba(125, 211, 252, 0.09);
+  --shadow-panel: 0 28px 78px rgba(0, 0, 0, 0.36);
+  --shadow-panel-focus: 0 34px 96px rgba(0, 0, 0, 0.42), var(--glow-focus);
+  --blur-surface: 12px;
+  --blur-atmosphere: 72px;
+  --ambient-quiet: 0.56;
+  --ambient-visible: 0.68;
+  --radius-panel: 24px;
+  --radius-control: 999px;
+  --bp-phone-small: 420px;
+  --bp-phone: 640px;
+  --bp-tablet: 768px;
+  --bp-laptop-small: 1024px;
+  --font-display: "Space Grotesk", "Satoshi", "Clash Display", "Cabinet Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-content: Inter, "IBM Plex Sans", Geist, Manrope, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-primary: rgba(255, 243, 251, 0.96);
+  --text-secondary: rgba(255, 243, 251, 0.86);
+  --text-tertiary: rgba(255, 243, 251, 0.72);
+  --text-label: rgba(125, 211, 252, 0.84);
+  --leading-copy: 1.78;
+  --leading-technical: 1.62;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  overflow-x: clip;
+  scrollbar-color: rgba(255, 122, 191, 0.46) rgba(19, 11, 24, 0.9);
+  scrollbar-width: thin;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: clip;
+  background: #130b18;
+  color: var(--text-primary);
+  font-family: var(--font-content);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+::-webkit-scrollbar-track {
+  background:
+    linear-gradient(180deg, rgba(19, 11, 24, 0.95), rgba(8, 4, 12, 0.98));
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(19, 11, 24, 0.95);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 122, 191, 0.72), rgba(125, 211, 252, 0.52));
+  box-shadow: 0 0 18px rgba(255, 122, 191, 0.18);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 122, 191, 0.9), rgba(125, 211, 252, 0.68));
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.magnetic-card-surface {
+  --card-rotate-x: 0deg;
+  --card-rotate-y: 0deg;
+  --card-lift: 0rem;
+  --card-light-x: 50%;
+  --card-light-y: 20%;
+  --card-light-opacity: 0;
+
+  transform:
+    perspective(900px)
+    translate3d(0, var(--card-lift), 0)
+    rotateX(var(--card-rotate-x))
+    rotateY(var(--card-rotate-y));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.magnetic-card-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at var(--card-light-x) var(--card-light-y),
+      rgba(255, 243, 251, calc(var(--card-light-opacity) * 0.09)),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at var(--card-light-x) var(--card-light-y),
+      rgba(125, 211, 252, calc(var(--card-light-opacity) * 0.06)),
+      transparent 52%
+    );
+  opacity: var(--card-light-opacity);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.magnetic-card-surface.magnetic-active {
+  box-shadow:
+    0 34px 92px rgba(0, 0, 0, 0.38),
+    0 22px 58px rgba(255, 122, 191, 0.11),
+    0 0 34px rgba(125, 211, 252, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.scroll-reveal {
+  opacity: 0 !important;
+  filter: blur(8px);
+  transform: translate3d(0, 1.5rem, 0) scale(0.985) !important;
+  transition:
+    opacity 680ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 680ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 680ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, filter, transform;
+}
+
+.scroll-reveal.is-revealed {
+  opacity: 1 !important;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
+.section-shell.projects .project-card.scroll-reveal {
+  transform: translate3d(0, 1.8rem, 0) scale(0.975) !important;
+}
+
+.section-shell.contact .transmission-panel.scroll-reveal,
+.section-shell.contact .status-card.scroll-reveal,
+.section-shell.contact .social-card.scroll-reveal {
+  transform: translate3d(0, 1.35rem, 0) scale(0.985) !important;
+}
+
+.command-target-pulse {
+  animation: commandTargetPulse 1700ms ease both;
+}
+
+@keyframes commandTargetPulse {
+  0%,
+  100% {
+    filter: none;
+  }
+
+  28% {
+    filter:
+      drop-shadow(0 0 18px rgba(255, 122, 191, 0.24))
+      drop-shadow(0 0 28px rgba(125, 211, 252, 0.12));
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-card-surface,
+  .magnetic-card-surface.magnetic-active {
+    transform: none;
+  }
+
+  .magnetic-card-surface::before {
+    display: none;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal.is-revealed,
+  .command-target-pulse {
+    opacity: 1 !important;
+    filter: none;
+    transform: none !important;
+    transition: none;
+    animation: none;
+  }
+}

@@ -1,0 +1,430 @@
+:host {
+  --pink: #ff7abf;
+  --lilac: #c084fc;
+  --blue: #7dd3fc;
+  --white: #fff3fb;
+  --bg: #130b18;
+
+  display: contents;
+}
+
+.mascot-assistant {
+  position: fixed;
+  right: clamp(0.85rem, 2.5vw, 1.35rem);
+  bottom: clamp(0.85rem, 2.5vw, 1.35rem);
+  z-index: 9605;
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) auto;
+  align-items: end;
+  gap: 0.8rem;
+  pointer-events: none;
+}
+
+.mascot-assistant.command-active {
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.mascot-assistant.command-active .assistant-bubble {
+  border-color: rgba(125, 211, 252, 0.28);
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.48),
+    0 0 38px rgba(125, 211, 252, 0.14);
+}
+
+.assistant-bubble,
+.assistant-mascot {
+  pointer-events: auto;
+}
+
+.assistant-bubble {
+  position: relative;
+  overflow: hidden;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(255, 214, 235, 0.16);
+  border-radius: 18px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 122, 191, 0.15), transparent 9rem),
+    linear-gradient(145deg, rgba(255, 243, 251, 0.095), rgba(125, 211, 252, 0.035)),
+    rgba(19, 11, 24, 0.9);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.4),
+    0 0 34px rgba(255, 122, 191, 0.1);
+  backdrop-filter: blur(16px) saturate(1.08);
+  animation: bubbleIn 240ms ease both;
+}
+
+.assistant-bubble::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 7px,
+    rgba(255, 243, 251, 0.4) 8px,
+    transparent 9px
+  );
+  pointer-events: none;
+}
+
+.assistant-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.assistant-header span {
+  color: rgba(125, 211, 252, 0.86);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+}
+
+.assistant-header button {
+  min-height: 1.65rem;
+  border: 1px solid rgba(255, 214, 235, 0.12);
+  border-radius: 999px;
+  padding: 0 0.45rem;
+  color: rgba(255, 243, 251, 0.66);
+  background: rgba(255, 243, 251, 0.04);
+  font: 800 0.62rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  cursor: pointer;
+}
+
+.assistant-bubble p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: rgba(255, 243, 251, 0.88);
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.assistant-mascot {
+  --aura-opacity: 0.5;
+  --pink-glow: 0.18;
+  --aura-pink: 0.16;
+  --aura-blue: 0.15;
+  --face-blue-glow: 0.08;
+  --shine-opacity: 0.82;
+  --blush-opacity: 0.84;
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 5.4rem;
+  height: 4.4rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.34));
+  transform: rotate(3deg);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.assistant-mascot:hover,
+.assistant-mascot:focus-visible {
+  transform: translateY(-3px) rotate(1deg);
+  filter:
+    drop-shadow(0 18px 34px rgba(0, 0, 0, 0.38))
+    drop-shadow(0 0 18px rgba(255, 122, 191, 0.18));
+  outline: none;
+}
+
+.mascot-aura {
+  position: absolute;
+  inset: -1.3rem -1.6rem -1.1rem;
+  border-radius: 999px;
+  opacity: var(--aura-opacity);
+  background:
+    radial-gradient(circle at 38% 42%, rgba(255, 122, 191, var(--aura-pink)), transparent 42%),
+    radial-gradient(circle at 68% 34%, rgba(125, 211, 252, var(--aura-blue)), transparent 45%);
+  filter: blur(16px);
+  animation: assistantAura 5.8s ease-in-out infinite alternate;
+}
+
+.mascot-body {
+  position: relative;
+  display: block;
+  width: 4.45rem;
+  height: 2.85rem;
+  border-radius: 999px 999px 1.55rem 1.55rem;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.92), transparent 18%),
+    linear-gradient(135deg, #fff8fd 0%, #ffd9ef 54%, #bfeaff 100%);
+  box-shadow:
+    inset 0 -0.42rem 0.9rem rgba(255, 122, 191, var(--pink-glow)),
+    0 0 22px rgba(255, 214, 235, 0.38);
+  animation: assistantFloat 4.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+.mascot-ear {
+  position: absolute;
+  top: -1.45rem;
+  width: 1.35rem;
+  height: 2.45rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff8fd, #ffd6eb 72%, #bdeaff);
+  box-shadow: inset 0 -0.3rem 0.7rem rgba(255, 122, 191, 0.14);
+}
+
+.ear-left {
+  left: 0.32rem;
+  transform: rotate(-17deg);
+}
+
+.ear-right {
+  right: 0.22rem;
+  transform: rotate(21deg);
+}
+
+.mascot-face {
+  position: absolute;
+  inset: 0.48rem 0.62rem 0.45rem;
+  display: block;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 70% 26%, rgba(125, 211, 252, var(--face-blue-glow)), transparent 28%),
+    rgba(255, 255, 255, 0.24);
+}
+
+.mascot-shine,
+.mascot-eye,
+.mascot-blush,
+.mascot-mouth,
+.mascot-paw,
+.mascot-bow,
+.mascot-bow span {
+  position: absolute;
+  display: block;
+}
+
+.mascot-shine {
+  top: 0.15rem;
+  left: 0.65rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  opacity: var(--shine-opacity);
+  background: #fff;
+}
+
+.mascot-eye {
+  top: 0.88rem;
+  width: 0.34rem;
+  height: 0.44rem;
+  border-radius: 999px;
+  background: #3f274a;
+  animation: assistantBlink 5.6s infinite;
+}
+
+.eye-left {
+  left: 1.22rem;
+}
+
+.eye-right {
+  right: 1.22rem;
+}
+
+.mascot-blush {
+  top: 1.32rem;
+  width: 0.55rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  opacity: var(--blush-opacity);
+  background: rgba(255, 122, 191, 0.55);
+}
+
+.blush-left {
+  left: 0.72rem;
+}
+
+.blush-right {
+  right: 0.72rem;
+}
+
+.mascot-mouth {
+  left: 50%;
+  top: 1.38rem;
+  width: 0.42rem;
+  height: 0.22rem;
+  border-bottom: 2px solid #3f274a;
+  border-radius: 0 0 999px 999px;
+  transform: translateX(-50%);
+}
+
+.mascot-paw {
+  bottom: -0.18rem;
+  width: 0.74rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: #fff8fd;
+  box-shadow: 0 0 10px rgba(255, 214, 235, 0.35);
+}
+
+.paw-left {
+  left: 0.72rem;
+}
+
+.paw-right {
+  right: 0.72rem;
+}
+
+.mascot-bow {
+  top: 0.2rem;
+  right: 0.45rem;
+  width: 1.05rem;
+  height: 0.52rem;
+}
+
+.mascot-bow::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--pink);
+  transform: translate(-50%, -50%);
+}
+
+.mascot-bow span {
+  top: 0;
+  width: 0.58rem;
+  height: 0.52rem;
+  border-radius: 55% 45% 55% 45%;
+  background: var(--pink);
+}
+
+.mascot-bow span:first-child {
+  left: 0;
+  transform: rotate(18deg);
+}
+
+.mascot-bow span:last-child {
+  right: 0;
+  transform: rotate(-18deg);
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem) scale(0.98);
+  }
+}
+
+@keyframes assistantFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.28rem);
+  }
+}
+
+@keyframes assistantAura {
+  to {
+    opacity: 0.72;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes assistantBlink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  95% {
+    transform: scaleY(0.14);
+  }
+}
+
+@media (max-width: 760px) {
+  .mascot-assistant {
+    grid-template-columns: minmax(0, 1fr) auto;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: min(calc(100vw - 1.5rem), 24rem);
+  }
+
+  .mascot-assistant.command-active {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .assistant-bubble {
+    padding: 0.75rem 0.82rem;
+  }
+
+  .assistant-bubble p {
+    font-size: 0.8rem;
+  }
+
+  .assistant-mascot {
+    width: 4.4rem;
+    height: 3.6rem;
+  }
+
+  .mascot-body {
+    width: 3.65rem;
+    height: 2.35rem;
+  }
+
+  .mascot-ear {
+    top: -1.2rem;
+    width: 1.08rem;
+    height: 2rem;
+  }
+
+  .mascot-bow {
+    transform: scale(0.84);
+    transform-origin: top right;
+  }
+}
+
+@media (max-width: 480px) {
+  .mascot-assistant {
+    grid-template-columns: 1fr;
+    justify-items: end;
+  }
+
+  .mascot-assistant.command-active {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .mascot-assistant.minimized {
+    width: auto;
+  }
+
+  .assistant-bubble {
+    max-width: min(100%, 19rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant-bubble,
+  .mascot-body,
+  .mascot-aura,
+  .mascot-eye {
+    animation: none;
+  }
+
+  .assistant-mascot,
+  .assistant-header button {
+    transition: none;
+  }
+}

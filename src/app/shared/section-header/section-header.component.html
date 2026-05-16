@@ -1,0 +1,17 @@
+<header class="section-header">
+  <p class="section-badge">
+    <span aria-hidden="true"></span>
+    {{ badge }}
+  </p>
+
+  <h2
+    class="section-title"
+    [class.compact]="compactTitle"
+    [id]="titleId"
+    [attr.data-text]="title"
+  >
+    {{ title }}
+  </h2>
+
+  <p class="section-subtitle">{{ subtitle }}</p>
+</header>

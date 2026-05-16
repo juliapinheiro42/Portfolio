@@ -1,0 +1,133 @@
+<app-section-shell sectionId="projects" labelledBy="projects-title" variant="projects">
+  <app-section-header
+    badge="Mission archive online"
+    title="Case Files"
+    subtitle="Selected missions from the Julia.dev system: real technical projects organized as inspectable dossiers for recruiters and curious humans."
+    titleId="projects-title"
+  />
+
+  <div class="filter-console" aria-label="Filtros de projetos">
+    <span class="filter-label">Filter modules</span>
+
+    <div class="filter-actions">
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          class="filter-button"
+          [class.active]="selectedFilter === filter"
+          (click)="selectFilter(filter)"
+          [attr.aria-pressed]="selectedFilter === filter"
+        >
+          {{ filter }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="project-list">
+    @for (project of filteredProjects; track project.title; let index = $index) {
+      <article
+        class="project-card service-card"
+        appMagneticCard
+        [class.event-service]="project.intensity === 'event'"
+        [class.interface-service]="project.intensity === 'interface'"
+        [class.system-service]="project.intensity === 'system'"
+        [class.lab-service]="project.intensity === 'lab'"
+        [style.--card-delay.ms]="index * 110"
+      >
+        <div class="card-sheen" aria-hidden="true"></div>
+        <div class="service-ambient" aria-hidden="true"></div>
+        <div class="service-flow" aria-hidden="true">
+          @for (step of project.flow; track step; let flowIndex = $index) {
+            <span [style.left.%]="12 + flowIndex * 28" [style.animation-delay.ms]="flowIndex * 420"></span>
+          }
+        </div>
+
+        <div class="project-topbar dossier-topbar">
+          <div class="service-identity">
+            <span class="service-kind">{{ project.caseLabel }}</span>
+            <span class="service-name">/{{ project.serviceName }}</span>
+          </div>
+          <span class="module-id">{{ project.featured ? 'Featured Project' : projectModule(index) }}</span>
+        </div>
+
+        <div class="project-meta dossier-meta">
+          <span
+            class="status"
+            [class.online]="project.status === 'online'"
+            [class.building]="project.status === 'building'"
+            [class.archived]="project.status === 'archived'"
+          >
+            <span aria-hidden="true"></span>
+            {{ project.health }}
+          </span>
+          <span class="type">{{ project.type }}</span>
+          <span class="complexity">Complexity: {{ project.complexity }}</span>
+        </div>
+
+        <h3 class="project-title" [attr.data-text]="project.title">
+          {{ project.title }}
+        </h3>
+
+        <p class="project-subtitle">{{ project.subtitle }}</p>
+
+        <div class="mission-brief">
+          <article>
+            <span>Problem</span>
+            <p>{{ project.problem }}</p>
+          </article>
+
+          <article>
+            <span>My role</span>
+            <p>{{ project.myRole }}</p>
+          </article>
+        </div>
+
+        <div class="boss-fight" aria-label="Principal desafio técnico">
+          <span>Boss fight</span>
+          <strong>{{ project.bossFight }}</strong>
+        </div>
+
+        <ul class="project-highlights unlocked-list" aria-label="Unlocked abilities">
+          @for (feature of project.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+
+        <div class="tag-list" aria-label="Tecnologias usadas">
+          @for (tag of project.tags.slice(0, 6); track tag) {
+            <span>{{ tag }}</span>
+          }
+        </div>
+
+        <div class="project-actions">
+          <button type="button" class="mission-report-button" (click)="inspectProject(project, $event)">
+            View Mission Report
+          </button>
+
+          @if (project.githubUrl) {
+            <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">
+              View Code
+            </a>
+          }
+
+          @if (project.demoUrl) {
+            <a [href]="project.demoUrl" [attr.target]="project.demoUrl.startsWith('#') ? null : '_blank'" rel="noopener noreferrer">
+              Live Demo
+            </a>
+          }
+
+          @if (project.caseStudyUrl) {
+            <a [routerLink]="project.caseStudyUrl">
+              Read Case Study
+            </a>
+          }
+        </div>
+      </article>
+    }
+  </div>
+
+  @if (inspectedProject) {
+    <app-project-runtime-inspector [project]="inspectedProject" (closed)="closeInspection()" />
+  }
+</app-section-shell>

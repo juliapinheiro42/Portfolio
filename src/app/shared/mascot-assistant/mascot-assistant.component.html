@@ -1,0 +1,43 @@
+<aside
+  class="mascot-assistant"
+  [class.minimized]="!isBubbleOpen"
+  [class.command-active]="isCommandCenterOpen"
+  aria-label="Juno.exe portfolio assistant"
+>
+  @if (isBubbleOpen) {
+    <div class="assistant-bubble" role="status" aria-live="polite">
+      <div class="assistant-header">
+        <span>Juno.exe</span>
+        <button type="button" aria-label="Minimize Juno assistant" (click)="minimizeBubble()">min</button>
+      </div>
+      <p>{{ message }}</p>
+    </div>
+  }
+
+  <button
+    class="assistant-mascot"
+    type="button"
+    [attr.aria-label]="isBubbleOpen ? 'Minimize Juno assistant' : 'Open Juno assistant'"
+    (click)="toggleBubble()"
+  >
+    <span class="mascot-aura" aria-hidden="true"></span>
+    <span class="mascot-body" aria-hidden="true">
+      <span class="mascot-paw paw-left"></span>
+      <span class="mascot-paw paw-right"></span>
+      <span class="mascot-ear ear-left"></span>
+      <span class="mascot-ear ear-right"></span>
+      <span class="mascot-bow">
+        <span></span>
+        <span></span>
+      </span>
+      <span class="mascot-face">
+        <span class="mascot-shine"></span>
+        <span class="mascot-eye eye-left"></span>
+        <span class="mascot-eye eye-right"></span>
+        <span class="mascot-blush blush-left"></span>
+        <span class="mascot-blush blush-right"></span>
+        <span class="mascot-mouth"></span>
+      </span>
+    </span>
+  </button>
+</aside>
