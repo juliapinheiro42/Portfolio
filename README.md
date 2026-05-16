@@ -49,19 +49,22 @@ O projeto não possui script de lint configurado atualmente.
 
 ## Scripts Disponíveis
 
-| Script | Função |
-| --- | --- |
-| `npm start` | Inicia `ng serve` em modo desenvolvimento |
+| Script          | Função                                           |
+| --------------- | ------------------------------------------------ |
+| `npm start`     | Inicia `ng serve` em modo desenvolvimento        |
 | `npm run build` | Gera build de produção em `dist/julia-portfolio` |
 | `npm run watch` | Build em modo watch com configuração development |
-| `npm test` | Executa testes com Karma/Jasmine |
+| `npm test`      | Executa testes com Karma/Jasmine                 |
 
 ## Rotas
 
 As rotas ficam em `src/app/app.routes.ts`.
 
 | Rota | Componente | Observação |
-| --- | --- | --- |
+| ---
+| ---
+| ---
+|
 | `/` | `HomeComponent` | Página principal do portfolio |
 | `/projects/skinmatch-ai` | lazy-loaded `SkinmatchAiCaseStudyComponent` | Case study completo do SkinMatch AI |
 | `**` | redirect | Redireciona para home |
@@ -222,7 +225,7 @@ Cada projeto possui:
 - Complexidade
 - Problema
 - Solução
-- Papel da Julia
+- Papel da Julia(eu)
 - Boss fight
 - Features
 - Stack/tags
@@ -490,12 +493,12 @@ Esses arquivos são os melhores pontos para ajustar intensidade visual sem mexer
 src/app/data/
 ```
 
-| Arquivo | Conteúdo |
-| --- | --- |
-| `about.data.ts` | Stack aplicada, stats e linhas do perfil |
-| `projects.data.ts` | Projetos, inspector, technical breakdown e links |
-| `bug-graveyard.data.ts` | Bugs resolvidos e detalhes técnicos |
-| `social-links.data.ts` | GitHub, LinkedIn, e-mail, WhatsApp e resume |
+| Arquivo                 | Conteúdo                                         |
+| ----------------------- | ------------------------------------------------ |
+| `about.data.ts`         | Stack aplicada, stats e linhas do perfil         |
+| `projects.data.ts`      | Projetos, inspector, technical breakdown e links |
+| `bug-graveyard.data.ts` | Bugs resolvidos e detalhes técnicos              |
+| `social-links.data.ts`  | GitHub, LinkedIn, e-mail, WhatsApp e resume      |
 
 ## Acessibilidade
 
@@ -635,4 +638,4 @@ Este portfolio busca comunicar:
 Full Stack Developer focused on APIs, intelligent systems and expressive interfaces.
 ```
 
-A experiência visual é parte da proposta: não é apenas uma landing page, mas uma interface viva do sistema `julia.dev`, com comandos, arquivos secretos, projetos inspecionáveis e uma camada narrativa técnica.
+A experiência visual é parte da proposta: A ideia era sair dos portfolios que são apenas uma landing page, o transformando em uma interface viva do sistema `julia.dev`, com comandos, arquivos secretos, projetos inspecionáveis e uma camada narrativa técnica.
