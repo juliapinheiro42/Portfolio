@@ -11,7 +11,7 @@
 .command-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 9500;
+  z-index: 9800;
   background:
     radial-gradient(circle at 50% 22%, rgba(255, 122, 191, 0.14), transparent 24rem),
     radial-gradient(circle at 76% 70%, rgba(125, 211, 252, 0.09), transparent 22rem),
@@ -24,7 +24,7 @@
   position: fixed;
   left: 50%;
   top: min(7vh, 4rem);
-  z-index: 9501;
+  z-index: 9801;
   display: grid;
   grid-template-rows: auto minmax(16rem, 1fr) auto minmax(8rem, auto);
   gap: 1rem;
@@ -32,6 +32,7 @@
   height: min(92dvh, 58rem);
   max-height: calc(100dvh - 1.5rem);
   overflow: hidden;
+  min-width: 0;
   padding: clamp(1rem, 2.4vw, 1.45rem);
   border: 1px solid rgba(255, 214, 235, 0.16);
   border-radius: 28px;
@@ -417,11 +418,13 @@
     left: auto;
     top: auto;
     width: auto;
+    min-width: 0;
     height: auto;
     max-height: calc(100dvh - max(1.5rem, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
     grid-template-rows: auto minmax(0, 1fr) minmax(7rem, 30dvh);
     border-radius: 24px;
     transform: none;
+    box-sizing: border-box;
   }
 
   .command-header {
@@ -454,6 +457,10 @@
   .command-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-height: none;
+  }
+
+  .command-chip {
+    min-width: 0;
   }
 
   @keyframes commandIn {

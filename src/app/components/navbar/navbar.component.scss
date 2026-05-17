@@ -713,7 +713,8 @@
   }
 
   .nav-shell {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
     width: 100%;
     min-height: 3.52rem;
     padding: 0.42rem 0.5rem 0.42rem 0.82rem;
@@ -727,6 +728,7 @@
 
   .menu-toggle {
     display: inline-flex;
+    justify-self: end;
     min-width: 2.68rem;
     min-height: 2.68rem;
   }

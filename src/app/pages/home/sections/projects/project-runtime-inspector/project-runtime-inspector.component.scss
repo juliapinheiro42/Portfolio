@@ -17,7 +17,7 @@
 
   position: fixed;
   inset: 0;
-  z-index: 1500;
+  z-index: 9800;
   color: var(--white);
 }
 
@@ -272,6 +272,7 @@
   display: grid;
   gap: 0.82rem;
   padding: 1.12rem;
+  align-content: start;
 }
 
 .overview-card p,
@@ -954,6 +955,7 @@
 
   .inspector-layout {
     padding: 0.75rem;
+    overflow: hidden auto;
   }
 
   .inspector-sidebar,
@@ -962,6 +964,33 @@
   .breakdown-grid,
   .breakdown-flow ol {
     grid-template-columns: 1fr;
+  }
+
+  .inspector-sidebar {
+    overflow: visible;
+    gap: 0.8rem;
+  }
+
+  .sidebar-card,
+  .content-card,
+  .copy-panel,
+  .system-flow-panel,
+  .runtime-panel,
+  .breakdown-summary article,
+  .breakdown-card,
+  .breakdown-flow {
+    height: auto;
+    min-height: 0;
+  }
+
+  .overview-card p,
+  .copy-panel p,
+  .breakdown-summary p,
+  .status-card small,
+  .content-card li,
+  .breakdown-card li,
+  .breakdown-flow li {
+    overflow-wrap: anywhere;
   }
 
   .runtime-tabs {
@@ -1019,6 +1048,32 @@
   .inspector-layout {
     padding: 0.58rem;
     gap: 0.75rem;
+  }
+
+  .sidebar-card {
+    gap: 0.68rem;
+    padding: 0.86rem;
+  }
+
+  .overview-card p,
+  .copy-panel p,
+  .breakdown-summary p {
+    font-size: 0.92rem;
+    line-height: 1.62;
+  }
+
+  .status-card strong {
+    font-size: 0.96rem;
+    line-height: 1.35;
+  }
+
+  .sidebar-tags span,
+  .domain-list span,
+  .stack-cloud span,
+  .repository-link {
+    min-height: 2rem;
+    font-size: 0.68rem;
+    line-height: 1.25;
   }
 
   .sidebar-card,

@@ -64,6 +64,7 @@
   position: relative;
   display: grid;
   gap: 0.9rem;
+  align-content: start;
   min-width: 0;
   overflow: hidden;
   padding: clamp(1rem, 2.2vw, 1.25rem);
@@ -364,6 +365,19 @@
   .bug-card button {
     width: 100%;
     justify-content: center;
+  }
+
+  .bug-card {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .bug-card h3,
+  .lesson-panel p,
+  .bug-skills span,
+  .bug-meta span {
+    overflow-wrap: anywhere;
   }
 
   .death-certificate {

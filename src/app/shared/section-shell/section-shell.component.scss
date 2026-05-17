@@ -27,6 +27,7 @@
 
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 6rem;
   padding: clamp(5rem, 10vw, 8rem) clamp(1.1rem, 7vw, 6rem);
   color: var(--white);
   perspective: 1200px;
@@ -791,6 +792,7 @@
 @media (max-width: 768px) {
   .section-shell {
     padding-block: 4.5rem;
+    scroll-margin-top: 5rem;
   }
 
   .section-shell.hero,

@@ -12,7 +12,7 @@
   position: fixed;
   right: max(clamp(0.85rem, 2.5vw, 1.35rem), env(safe-area-inset-right));
   bottom: max(clamp(0.85rem, 2.5vw, 1.35rem), env(safe-area-inset-bottom));
-  z-index: 9605;
+  z-index: 9100;
   display: grid;
   grid-template-columns: minmax(0, 18rem) auto;
   align-items: end;
@@ -413,13 +413,11 @@
   }
 
   .assistant-bubble {
-    max-width: min(100%, 14.5rem);
-    max-height: 9rem;
-    overflow: hidden auto;
+    display: none;
   }
 
-  .mascot-assistant:not(.command-active) .assistant-bubble {
-    max-width: min(100%, 11.5rem);
+  .mascot-assistant.command-active {
+    display: none;
   }
 
   .assistant-header span {
