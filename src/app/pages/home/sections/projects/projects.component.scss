@@ -488,6 +488,8 @@
 .module-id {
   color: rgba(255, 243, 251, 0.42);
   max-width: 100%;
+  min-width: 0;
+  white-space: normal;
   overflow-wrap: anywhere;
 }
 
@@ -836,6 +838,9 @@
   font-size: 0.86rem;
   font-weight: 760;
   letter-spacing: 0.01em;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .project-actions {
@@ -1178,6 +1183,12 @@
     width: 100%;
   }
 
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
   .project-topbar {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -1203,8 +1214,28 @@
 
   .mission-brief p,
   .boss-fight strong,
-  .project-highlights li {
+  .project-highlights li,
+  .project-subtitle,
+  .service-kind,
+  .service-name,
+  .module-id,
+  .status,
+  .type,
+  .complexity,
+  .tag-list span {
     overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .tag-list span {
+    flex: 1 1 auto;
+    min-width: min(100%, 8rem);
+    text-align: center;
+  }
+
+  .project-actions {
+    margin-top: 1.45rem;
+    padding-top: 0;
   }
 
   .spark-three,

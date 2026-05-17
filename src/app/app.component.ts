@@ -1,4 +1,5 @@
-import { Component, DestroyRef, HostListener, OnDestroy, OnInit, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, DestroyRef, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -33,16 +34,24 @@ export class AppComponent implements OnInit, OnDestroy {
   isProjectRoute = false;
   isChaosModeActive = false;
   showSecretToast = false;
+  isMobileShell = false;
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly isBrowser: boolean;
   private logoClickCount = 0;
   private logoClickResetTimer?: number;
   private chaosTimer?: number;
   private toastTimer?: number;
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
+    this.updateMobileShell();
     this.syncRouteState(this.router.url);
 
     this.router.events
@@ -51,6 +60,11 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((event) => this.syncRouteState(event.urlAfterRedirects));
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateMobileShell();
   }
 
   ngOnDestroy(): void {
@@ -156,5 +170,13 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       }
     }
+  }
+
+  private updateMobileShell(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    this.isMobileShell = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
   }
 }

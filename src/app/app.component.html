@@ -4,11 +4,16 @@
 
 @if (!showIntro) {
   <app-navbar />
-  <app-command-center />
+
+  @defer (on idle) {
+    <app-command-center />
+  }
 
   @defer (on idle) {
     <app-lore-video-modal />
-    <app-mascot-assistant />
+    @if (!isMobileShell) {
+      <app-mascot-assistant />
+    }
   }
 }
 

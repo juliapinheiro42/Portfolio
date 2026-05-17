@@ -44,7 +44,11 @@
     </div>
 
     <div class="hero-visual" aria-label="Infraestrutura distribuída abstrata em segundo plano">
-      <app-system-map class="architecture-map" />
+      @if (!isMobileVisualMode) {
+        @defer (on idle) {
+          <app-system-map class="architecture-map" />
+        }
+      }
 
       <div class="status-pill" aria-hidden="true">
         ghost infrastructure online

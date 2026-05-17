@@ -172,6 +172,9 @@
   background: rgba(125, 211, 252, 0.055);
   font: 760 0.78rem/1.12 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
   text-decoration: none;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .runtime-meta span:nth-child(2) {
@@ -294,6 +297,18 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   line-height: 1.55;
+}
+
+.content-card p,
+.system-flow-panel p,
+.runtime-panel p,
+.breakdown-card p,
+.breakdown-flow p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(0.94rem, 1vw, 1rem);
+  line-height: 1.68;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-tags,
@@ -935,8 +950,8 @@
   }
 
   .runtime-header {
-    position: sticky;
-    top: 0;
+    position: relative;
+    top: auto;
     z-index: 6;
     padding: 0.95rem;
     background:
@@ -1043,6 +1058,7 @@
   .runtime-meta span {
     min-height: 2rem;
     font-size: 0.7rem;
+    flex: 1 1 auto;
   }
 
   .inspector-layout {
@@ -1074,6 +1090,7 @@
     min-height: 2rem;
     font-size: 0.68rem;
     line-height: 1.25;
+    flex: 1 1 auto;
   }
 
   .sidebar-card,

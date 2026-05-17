@@ -234,6 +234,32 @@ select {
   }
 }
 
+@media (max-width: 768px), (pointer: coarse) {
+  .magnetic-card-surface,
+  .magnetic-card-surface.magnetic-active {
+    transform: none;
+    will-change: auto;
+  }
+
+  .magnetic-card-surface::before {
+    display: none;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal.is-revealed {
+    opacity: 1 !important;
+    filter: none;
+    transform: none !important;
+    transition-duration: 180ms;
+    will-change: auto;
+  }
+
+  .command-target-pulse {
+    animation: none;
+    filter: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .magnetic-card-surface,
   .magnetic-card-surface.magnetic-active {

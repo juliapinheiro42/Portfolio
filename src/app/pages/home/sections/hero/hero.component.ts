@@ -28,6 +28,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   isReconstructing = false;
+  isMobileVisualMode = false;
 
   private readonly isBrowser: boolean;
   private readonly reduceMotionQuery?: MediaQueryList;
@@ -55,6 +56,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
     if (this.isBrowser) {
       this.reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.updateMobileVisualMode();
     }
   }
 
@@ -133,8 +135,13 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.queueMascotFrame();
   }
 
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateMobileVisualMode();
+  }
+
   private get canAnimate(): boolean {
-    return this.isBrowser && !this.prefersReducedMotion && !!this.mascotElement;
+    return this.isBrowser && !this.prefersReducedMotion && !this.isMobileVisualMode && !!this.mascotElement;
   }
 
   private get prefersReducedMotion(): boolean {
@@ -187,5 +194,13 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   private clamp(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
+  }
+
+  private updateMobileVisualMode(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    this.isMobileVisualMode = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
   }
 }
