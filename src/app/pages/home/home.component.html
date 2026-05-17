@@ -4,25 +4,25 @@
 
 <app-hero [playReconstruction]="playHeroReconstruction" />
 
-@defer (on viewport; prefetch on idle) {
+@defer (on idle) {
   <app-about />
 } @placeholder {
   <div class="deferred-section-placeholder" aria-hidden="true"></div>
 }
 
-@defer (on viewport; prefetch on idle) {
+@defer (on idle) {
   <app-projects />
 } @placeholder {
   <div class="deferred-section-placeholder large" aria-hidden="true"></div>
 }
 
-@defer (on viewport; prefetch on idle) {
+@defer (on idle) {
   <app-bug-graveyard />
 } @placeholder {
   <div class="deferred-section-placeholder" aria-hidden="true"></div>
 }
 
-@defer (on viewport; prefetch on idle) {
+@defer (on idle) {
   <app-contact />
 } @placeholder {
   <div class="deferred-section-placeholder contact" aria-hidden="true"></div>
