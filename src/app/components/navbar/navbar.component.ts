@@ -107,10 +107,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       return;
     }
 
-    target.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    this.scrollTargetIntoView(target);
 
     this.activeSection = link.id;
     this.closeMenu();
@@ -158,6 +155,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.scrollFrame = undefined;
       this.updateNavState();
     });
+  }
+
+  private scrollTargetIntoView(target: HTMLElement): void {
+    try {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    } catch {
+      target.scrollIntoView();
+    }
   }
 
   private syncBodyScroll(): void {

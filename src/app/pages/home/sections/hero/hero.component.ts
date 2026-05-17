@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -48,6 +48,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
     private readonly renderer: Renderer2,
+    @Inject(DOCUMENT) private readonly document: Document,
     @Inject(PLATFORM_ID) platformId: object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -68,6 +69,26 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.isBrowser && this.animationFrame) {
       window.cancelAnimationFrame(this.animationFrame);
+    }
+  }
+
+  navigateToSection(sectionId: string, event: Event): void {
+    event.preventDefault();
+
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const target = this.document.getElementById(sectionId);
+
+    if (!target) {
+      return;
+    }
+
+    try {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch {
+      target.scrollIntoView();
     }
   }
 

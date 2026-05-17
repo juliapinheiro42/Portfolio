@@ -57,7 +57,7 @@ export class ProjectRuntimeInspectorComponent implements AfterViewInit, OnChange
     this.queueInternalScrollReset();
 
     window.requestAnimationFrame(() => {
-      this.runtimeDialog?.nativeElement.focus({ preventScroll: true });
+      this.focusElement(this.runtimeDialog?.nativeElement);
     });
   }
 
@@ -144,7 +144,7 @@ export class ProjectRuntimeInspectorComponent implements AfterViewInit, OnChange
 
     if (!firstElement || !lastElement) {
       event.preventDefault();
-      dialog.focus({ preventScroll: true });
+      this.focusElement(dialog);
       return;
     }
 
@@ -174,10 +174,27 @@ export class ProjectRuntimeInspectorComponent implements AfterViewInit, OnChange
   }
 
   private resetScrollableElement(element: HTMLElement | undefined, behavior: ScrollBehavior): void {
-    element?.scrollTo({
-      top: 0,
-      left: 0,
-      behavior
-    });
+    if (!element) {
+      return;
+    }
+
+    try {
+      element.scrollTo({ top: 0, left: 0, behavior });
+    } catch {
+      element.scrollTop = 0;
+      element.scrollLeft = 0;
+    }
+  }
+
+  private focusElement(element: HTMLElement | undefined): void {
+    if (!element) {
+      return;
+    }
+
+    try {
+      element.focus({ preventScroll: true });
+    } catch {
+      element.focus();
+    }
   }
 }

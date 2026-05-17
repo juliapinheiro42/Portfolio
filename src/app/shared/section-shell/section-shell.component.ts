@@ -223,6 +223,14 @@ export class SectionShellComponent implements AfterViewInit, OnDestroy {
       );
     });
 
+    if (typeof IntersectionObserver === 'undefined') {
+      revealItems.forEach((item) => {
+        this.renderer.removeClass(item, 'scroll-reveal');
+        this.renderer.removeStyle(item, '--reveal-delay');
+      });
+      return;
+    }
+
     this.revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -254,7 +262,7 @@ export class SectionShellComponent implements AfterViewInit, OnDestroy {
   }
 
   private observeSectionProgress(): void {
-    if (!this.shellElement) {
+    if (!this.shellElement || typeof IntersectionObserver === 'undefined') {
       return;
     }
 

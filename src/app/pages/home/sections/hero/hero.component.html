@@ -34,10 +34,10 @@
       </p>
 
       <div class="hero-actions" aria-label="Ações principais">
-        <a class="hero-button primary" href="#projects">
+        <a class="hero-button primary" href="#projects" (click)="navigateToSection('projects', $event)">
           View Projects
         </a>
-        <a class="hero-button secondary" href="#contact">
+        <a class="hero-button secondary" href="#contact" (click)="navigateToSection('contact', $event)">
           Contact Me
         </a>
       </div>

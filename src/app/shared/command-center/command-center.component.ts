@@ -63,10 +63,7 @@ export class CommandCenterComponent implements AfterViewChecked, OnDestroy {
 
     if (this.shouldScrollOutput && this.terminalOutput) {
       this.shouldScrollOutput = false;
-      this.terminalOutput.nativeElement.scrollTo({
-        top: this.terminalOutput.nativeElement.scrollHeight,
-        behavior: 'smooth'
-      });
+      this.scrollTerminalToBottom(this.terminalOutput.nativeElement);
     }
   }
 
@@ -272,7 +269,7 @@ export class CommandCenterComponent implements AfterViewChecked, OnDestroy {
       this.close();
 
       window.setTimeout(() => {
-        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.scrollTargetIntoView(target);
 
         if (target) {
           this.highlightTarget(target);
@@ -284,6 +281,29 @@ export class CommandCenterComponent implements AfterViewChecked, OnDestroy {
   private appendLine(kind: TerminalLineKind, text: string): void {
     this.terminalLines = [...this.terminalLines, { kind, text }];
     this.shouldScrollOutput = true;
+  }
+
+  private scrollTerminalToBottom(element: HTMLElement): void {
+    try {
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: 'smooth'
+      });
+    } catch {
+      element.scrollTop = element.scrollHeight;
+    }
+  }
+
+  private scrollTargetIntoView(target: HTMLElement | null): void {
+    if (!target) {
+      return;
+    }
+
+    try {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch {
+      target.scrollIntoView();
+    }
   }
 
   private moveCommandSelection(direction: number): void {

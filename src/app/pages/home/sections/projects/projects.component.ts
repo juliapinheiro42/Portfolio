@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PROJECT_FILTERS, PROJECTS, Project, ProjectFilter, ProjectStatus } from '../../../../data/projects.data';
 import { MagneticCardDirective } from '../../../../shared/magnetic-card/magnetic-card.directive';
@@ -21,10 +21,16 @@ export class ProjectsComponent {
   selectedFilter: ProjectFilter = 'All';
 
   inspectedProject?: Project;
+  private readonly isBrowser: boolean;
   private inspectionTrigger?: HTMLElement;
   private inspectedCard?: HTMLElement;
 
-  constructor(@Inject(DOCUMENT) private readonly document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   get filteredProjects(): readonly Project[] {
     if (this.selectedFilter === 'All') {
@@ -59,9 +65,13 @@ export class ProjectsComponent {
   closeInspection(): void {
     this.inspectedProject = undefined;
 
+    if (!this.isBrowser) {
+      return;
+    }
+
     window.requestAnimationFrame(() => {
       this.scrollElementIntoView(this.inspectedCard);
-      this.inspectionTrigger?.focus({ preventScroll: true });
+      this.focusElement(this.inspectionTrigger);
     });
   }
 
@@ -82,20 +92,21 @@ export class ProjectsComponent {
   }
 
   private scrollElementIntoView(element?: HTMLElement): void {
-    if (!element) {
+    if (!element || !this.isBrowser) {
       return;
     }
 
     const topOffset = window.innerWidth <= 640 ? 72 : 104;
     const targetTop = element.getBoundingClientRect().top + window.scrollY - topOffset;
 
-    window.scrollTo({
-      top: Math.max(targetTop, 0),
-      behavior: 'smooth'
-    });
+    this.scrollPageTo(Math.max(targetTop, 0));
   }
 
   private scrollProjectsSectionIntoView(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
     const projectsSection = this.document.getElementById('projects');
 
     if (!projectsSection) {
@@ -106,9 +117,26 @@ export class ProjectsComponent {
     const topOffset = window.innerWidth <= 640 ? 72 : 104;
     const targetTop = projectsSection.getBoundingClientRect().top + window.scrollY - topOffset;
 
-    window.scrollTo({
-      top: Math.max(targetTop, 0),
-      behavior: 'smooth'
-    });
+    this.scrollPageTo(Math.max(targetTop, 0));
+  }
+
+  private scrollPageTo(top: number): void {
+    try {
+      window.scrollTo({ top, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, top);
+    }
+  }
+
+  private focusElement(element?: HTMLElement): void {
+    if (!element) {
+      return;
+    }
+
+    try {
+      element.focus({ preventScroll: true });
+    } catch {
+      element.focus();
+    }
   }
 }
