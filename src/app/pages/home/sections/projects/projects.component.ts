@@ -21,6 +21,7 @@ export class ProjectsComponent {
   selectedFilter: ProjectFilter = 'All';
 
   inspectedProject?: Project;
+  readonly expandedProjectIds = new Set<string>();
   private readonly isBrowser: boolean;
   private inspectionTrigger?: HTMLElement;
   private inspectedCard?: HTMLElement;
@@ -50,6 +51,29 @@ export class ProjectsComponent {
 
   statusLabel(status: ProjectStatus): string {
     return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+
+  detailsId(project: Project): string {
+    return `project-details-${project.id}`;
+  }
+
+  isExpanded(project: Project): boolean {
+    return this.expandedProjectIds.has(project.id);
+  }
+
+  toggleDetails(project: Project, event?: MouseEvent): void {
+    if (this.expandedProjectIds.has(project.id)) {
+      this.expandedProjectIds.delete(project.id);
+      return;
+    }
+
+    this.expandedProjectIds.add(project.id);
+
+    const card = event?.currentTarget instanceof HTMLElement
+      ? event.currentTarget.closest<HTMLElement>('.project-card')
+      : undefined;
+
+    this.scrollElementIntoView(card ?? undefined);
   }
 
   inspectProject(project: Project, event?: MouseEvent): void {

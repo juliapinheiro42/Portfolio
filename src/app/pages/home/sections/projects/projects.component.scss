@@ -262,7 +262,7 @@
   display: grid;
   align-content: start;
   gap: 0;
-  min-height: 34rem;
+  min-height: auto;
   min-width: 0;
   padding: clamp(1.05rem, 2.4vw, 1.35rem);
   border: 1px solid rgba(255, 214, 235, 0.16);
@@ -606,6 +606,27 @@
   margin-top: 1.15rem;
 }
 
+.mission-summary {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.66rem;
+  margin-top: 1rem;
+  min-width: 0;
+}
+
+.mission-summary article {
+  display: grid;
+  gap: 0.36rem;
+  min-width: 0;
+  padding: 0.76rem 0.82rem;
+  border: 1px solid rgba(255, 214, 235, 0.1);
+  border-radius: 15px;
+  background:
+    linear-gradient(135deg, rgba(255, 243, 251, 0.04), rgba(125, 211, 252, 0.018)),
+    rgba(19, 11, 24, 0.3);
+}
+
 .mission-brief article,
 .boss-fight {
   display: grid;
@@ -619,6 +640,7 @@
 }
 
 .mission-brief span,
+.mission-summary span,
 .boss-fight span {
   color: var(--text-label, rgba(125, 211, 252, 0.84));
   font: 820 0.72rem/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
@@ -632,6 +654,19 @@
   font-size: 0.94rem;
   font-weight: 620;
   line-height: 1.62;
+}
+
+.mission-summary p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: rgba(255, 243, 251, 0.86);
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .boss-fight {
@@ -828,6 +863,10 @@
   margin-top: 1.25rem;
 }
 
+.compact-tags {
+  margin-top: 1rem;
+}
+
 .tag-list span {
   padding: 0.54rem 0.72rem;
   border: 1px solid rgba(125, 211, 252, 0.2);
@@ -847,8 +886,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
-  margin-top: auto;
-  padding-top: 1.45rem;
+  margin-top: 1.1rem;
+  padding-top: 0;
 }
 
 .project-actions a,
@@ -873,6 +912,62 @@
 .project-actions .mission-report-button {
   background: linear-gradient(135deg, rgba(255, 122, 191, 0.9), rgba(192, 132, 252, 0.9));
   box-shadow: 0 16px 36px rgba(255, 122, 191, 0.2);
+}
+
+.project-actions .details-toggle {
+  border-color: rgba(125, 211, 252, 0.24);
+  color: rgba(255, 243, 251, 0.9);
+  background: rgba(125, 211, 252, 0.075);
+}
+
+.project-details-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 0fr;
+  min-width: 0;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(-0.25rem);
+  transition:
+    grid-template-rows 220ms ease,
+    opacity 180ms ease,
+    margin-top 180ms ease,
+    transform 180ms ease;
+}
+
+.project-details-panel.expanded {
+  grid-template-rows: 1fr;
+  margin-top: 1rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-details-panel > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.full-stack-list {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  min-width: 0;
+  padding: 0.82rem;
+  border: 1px solid rgba(125, 211, 252, 0.13);
+  border-radius: 16px;
+  background: rgba(125, 211, 252, 0.035);
+}
+
+.full-stack-list > span {
+  color: var(--text-label, rgba(125, 211, 252, 0.84));
+  font: 820 0.72rem/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.full-stack-list .tag-list {
+  margin-top: 0;
 }
 
 .project-actions a:hover,

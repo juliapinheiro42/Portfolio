@@ -71,36 +71,35 @@
 
         <p class="project-subtitle">{{ project.subtitle }}</p>
 
-        <div class="mission-brief">
+        <div class="mission-summary">
           <article>
             <span>Problem</span>
             <p>{{ project.problem }}</p>
           </article>
 
           <article>
-            <span>My role</span>
-            <p>{{ project.myRole }}</p>
+            <span>Solution</span>
+            <p>{{ project.solution }}</p>
           </article>
         </div>
 
-        <div class="boss-fight" aria-label="Principal desafio técnico">
-          <span>Boss fight</span>
-          <strong>{{ project.bossFight }}</strong>
-        </div>
-
-        <ul class="project-highlights unlocked-list" aria-label="Unlocked abilities">
-          @for (feature of project.features; track feature) {
-            <li>{{ feature }}</li>
-          }
-        </ul>
-
-        <div class="tag-list" aria-label="Tecnologias usadas">
+        <div class="tag-list compact-tags" aria-label="Tecnologias principais">
           @for (tag of project.tags.slice(0, 6); track tag) {
             <span>{{ tag }}</span>
           }
         </div>
 
         <div class="project-actions">
+          <button
+            type="button"
+            class="details-toggle"
+            (click)="toggleDetails(project, $event)"
+            [attr.aria-expanded]="isExpanded(project)"
+            [attr.aria-controls]="detailsId(project)"
+          >
+            {{ isExpanded(project) ? 'Hide details' : 'View details' }}
+          </button>
+
           <button type="button" class="mission-report-button" (click)="inspectProject(project, $event)">
             View Mission Report
           </button>
@@ -123,6 +122,47 @@
             </a>
           }
         </div>
+
+        <section
+          class="project-details-panel"
+          [class.expanded]="isExpanded(project)"
+          [attr.id]="detailsId(project)"
+          [attr.aria-hidden]="!isExpanded(project)"
+        >
+          @if (isExpanded(project)) {
+            <div class="mission-brief">
+              <article>
+                <span>Mission brief</span>
+                <p>{{ project.details }}</p>
+              </article>
+
+              <article>
+                <span>My role</span>
+                <p>{{ project.myRole }}</p>
+              </article>
+            </div>
+
+            <div class="boss-fight" aria-label="Principal desafio técnico">
+              <span>Boss fight</span>
+              <strong>{{ project.bossFight }}</strong>
+            </div>
+
+            <ul class="project-highlights unlocked-list" aria-label="Technical highlights">
+              @for (feature of project.features; track feature) {
+                <li>{{ feature }}</li>
+              }
+            </ul>
+
+            <div class="full-stack-list" aria-label="Stack completa">
+              <span>Complete stack</span>
+              <div class="tag-list">
+                @for (tag of project.tags; track tag) {
+                  <span>{{ tag }}</span>
+                }
+              </div>
+            </div>
+          }
+        </section>
       </article>
     }
   </div>
