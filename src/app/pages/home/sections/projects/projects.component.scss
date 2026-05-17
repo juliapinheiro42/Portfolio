@@ -262,6 +262,7 @@
   display: grid;
   align-content: start;
   min-height: 34rem;
+  min-width: 0;
   padding: clamp(1.05rem, 2.4vw, 1.35rem);
   border: 1px solid rgba(255, 214, 235, 0.16);
   border-radius: 24px;
@@ -423,11 +424,13 @@
   justify-content: space-between;
   gap: 0.8rem;
   margin-bottom: 1.1rem;
+  min-width: 0;
 }
 
 .service-identity {
   display: grid;
   gap: 0.34rem;
+  min-width: 0;
 }
 
 .service-kind,
@@ -483,6 +486,8 @@
 
 .module-id {
   color: rgba(255, 243, 251, 0.42);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .project-card:first-child .module-id {
@@ -511,6 +516,8 @@
   border: 1px solid rgba(255, 122, 191, 0.14);
   border-radius: 999px;
   background: rgba(255, 243, 251, 0.04);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .status span {
@@ -852,6 +859,8 @@
   font: 800 0.88rem/1 Inter, ui-sans-serif, system-ui, sans-serif;
   text-decoration: none;
   cursor: pointer;
+  min-width: 0;
+  text-align: center;
   transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
 }
 
@@ -1178,7 +1187,11 @@
   }
 
   .module-id {
-    text-align: right;
+    text-align: left;
+  }
+
+  .project-card:first-child .module-id {
+    width: fit-content;
   }
 
   .spark-three,

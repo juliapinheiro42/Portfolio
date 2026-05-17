@@ -245,7 +245,7 @@
   position: fixed;
   inset: 50% auto auto 50%;
   z-index: 9301;
-  width: min(calc(100vw - 2rem), 58rem);
+  width: min(calc(100dvw - 2rem), 58rem);
   max-height: min(86dvh, 48rem);
   overflow: hidden auto;
   border: 1px solid rgba(255, 214, 235, 0.16);

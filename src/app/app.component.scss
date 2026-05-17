@@ -29,12 +29,12 @@ main.chaos-mode {
 
 .secret-toast {
   position: fixed;
-  right: clamp(0.85rem, 3vw, 1.4rem);
-  bottom: clamp(0.85rem, 3vw, 1.4rem);
+  right: max(clamp(0.85rem, 3vw, 1.4rem), env(safe-area-inset-right));
+  bottom: max(clamp(0.85rem, 3vw, 1.4rem), env(safe-area-inset-bottom));
   z-index: 9700;
   display: grid;
   gap: 0.28rem;
-  width: min(calc(100vw - 1.7rem), 22rem);
+  width: min(calc(100dvw - 1.7rem), 22rem);
   padding: 0.9rem 1rem;
   border: 1px solid rgba(125, 211, 252, 0.28);
   border-radius: 18px;
@@ -48,6 +48,18 @@ main.chaos-mode {
     0 0 36px rgba(125, 211, 252, 0.12);
   backdrop-filter: blur(16px) saturate(1.12);
   animation: toastIn 260ms ease both;
+}
+
+@media (max-width: 760px) {
+  main {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+
+  .secret-toast {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: calc(5.2rem + env(safe-area-inset-bottom));
+    width: min(calc(100dvw - 1.5rem), 20rem);
+  }
 }
 
 .secret-toast span,

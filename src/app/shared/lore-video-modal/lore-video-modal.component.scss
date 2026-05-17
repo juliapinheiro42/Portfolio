@@ -24,7 +24,9 @@
   left: 50%;
   top: 50%;
   z-index: 9801;
-  width: min(calc(100vw - 2rem), 64rem);
+  width: min(calc(100dvw - 2rem), 64rem);
+  max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow: hidden auto;
   color: var(--white);
   transform: translate(-50%, -50%);
   animation: loreIn 240ms ease both;
@@ -44,6 +46,11 @@
     rgba(19, 11, 24, 0.86);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
   backdrop-filter: blur(16px);
+  min-width: 0;
+}
+
+.lore-header > div {
+  min-width: 0;
 }
 
 .lore-header span,
@@ -236,7 +243,12 @@
 
 @media (max-width: 640px) {
   .lore-modal {
-    width: calc(100vw - 1rem);
+    width: auto;
+    left: max(0.5rem, env(safe-area-inset-left));
+    right: max(0.5rem, env(safe-area-inset-right));
+    top: 50%;
+    max-height: calc(100dvh - 1rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: translateY(-50%);
   }
 
   .lore-header {
@@ -270,5 +282,15 @@
   .lore-start button,
   .lore-controls button {
     transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  @keyframes loreIn {
+    from {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(-48%) scale(0.98);
+    }
   }
 }

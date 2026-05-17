@@ -38,7 +38,11 @@
   z-index: 1;
   display: grid;
   min-height: 100dvh;
-  padding: clamp(0.55rem, 1.35vw, 1rem);
+  padding:
+    max(clamp(0.55rem, 1.35vw, 1rem), env(safe-area-inset-top))
+    max(clamp(0.55rem, 1.35vw, 1rem), env(safe-area-inset-right))
+    max(clamp(0.55rem, 1.35vw, 1rem), env(safe-area-inset-bottom))
+    max(clamp(0.55rem, 1.35vw, 1rem), env(safe-area-inset-left));
   place-items: center;
   overscroll-behavior: contain;
 }
@@ -52,6 +56,7 @@
   position: relative;
   overflow: hidden;
   width: min(100%, 94rem);
+  max-width: 100%;
   height: min(94dvh, 64rem);
   min-height: min(88dvh, 50rem);
   display: grid;
@@ -96,6 +101,7 @@
   background:
     linear-gradient(180deg, rgba(255, 243, 251, 0.065), transparent),
     rgba(8, 4, 12, 0.22);
+  min-width: 0;
 }
 
 .runtime-title-block {
@@ -330,6 +336,7 @@
   background: rgba(8, 4, 12, 0.74);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 34px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(12px) saturate(1.05);
+  min-width: 0;
 }
 
 .runtime-tabs button {
@@ -912,7 +919,11 @@
 @media (max-width: 768px) {
   .runtime-inspector {
     align-items: stretch;
-    padding: 0.55rem;
+    padding:
+      max(0.55rem, env(safe-area-inset-top))
+      max(0.55rem, env(safe-area-inset-right))
+      max(0.55rem, env(safe-area-inset-bottom))
+      max(0.55rem, env(safe-area-inset-left));
   }
 
   .runtime-shell {
@@ -931,6 +942,10 @@
       linear-gradient(180deg, rgba(255, 243, 251, 0.075), transparent),
       rgba(12, 6, 17, 0.88);
     backdrop-filter: blur(12px) saturate(1.08);
+  }
+
+  .runtime-title-block {
+    overflow-wrap: anywhere;
   }
 
   .runtime-header h2 {
@@ -953,6 +968,7 @@
     position: sticky;
     top: 0;
     overflow-x: auto;
+    max-width: 100%;
     flex-wrap: nowrap;
     border-radius: 18px;
   }

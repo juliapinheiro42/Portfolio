@@ -10,7 +10,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-  max-width: min(22rem, calc(100vw - 2rem));
+  max-width: min(22rem, calc(100dvw - 2rem));
   padding: 0.82rem 0.95rem;
   border: 1px solid rgba(255, 214, 235, 0.16);
   border-radius: 999px;
@@ -82,9 +82,9 @@
 
 @media (max-width: 640px) {
   .system-boot {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
+    left: max(1rem, env(safe-area-inset-left));
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
     width: auto;
     border-radius: 20px;
   }

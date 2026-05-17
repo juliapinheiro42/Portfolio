@@ -12,7 +12,7 @@
 /* Floating Shell */
 .navbar {
   position: fixed;
-  inset: 1rem clamp(0.85rem, 3vw, 2rem) auto;
+  inset: calc(1rem + env(safe-area-inset-top)) max(clamp(0.85rem, 3vw, 2rem), env(safe-area-inset-right)) auto max(clamp(0.85rem, 3vw, 2rem), env(safe-area-inset-left));
   z-index: 9000;
   color: var(--white);
   animation: navEnter 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -47,7 +47,8 @@
   align-items: center;
   gap: clamp(0.55rem, 1.4vw, 0.9rem);
   width: min(100%, 70rem);
-  max-width: calc(100vw - clamp(1.7rem, 6vw, 4rem));
+  max-width: calc(100dvw - clamp(1.7rem, 6vw, 4rem));
+  min-width: 0;
   min-height: 3.7rem;
   margin: 0 auto;
   padding: 0.42rem 0.5rem 0.42rem 0.86rem;
@@ -176,6 +177,7 @@
   font-weight: 850;
   letter-spacing: 0;
   text-decoration: none;
+  white-space: nowrap;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.34), 0 0 10px rgba(255, 122, 191, 0.12);
 }
 
@@ -490,9 +492,12 @@
 .mobile-panel {
   position: fixed;
   top: 5.35rem;
-  right: clamp(0.85rem, 3vw, 2rem);
+  right: max(clamp(0.85rem, 3vw, 2rem), env(safe-area-inset-right));
+  left: max(clamp(0.85rem, 3vw, 2rem), env(safe-area-inset-left));
   z-index: 9001;
-  width: min(calc(100vw - 1.7rem), 24rem);
+  width: auto;
+  max-width: 24rem;
+  margin-left: auto;
   max-height: calc(100dvh - 6rem);
   overflow: hidden auto;
   padding: 1rem;
@@ -693,7 +698,7 @@
 @media (max-width: 1060px) {
   .nav-shell {
     grid-template-columns: auto 1fr auto auto;
-    max-width: calc(100vw - 1.7rem);
+    max-width: calc(100dvw - 1.7rem);
   }
 
   .nav-status {
@@ -704,11 +709,12 @@
 @media (max-width: 860px) {
   .navbar {
     top: 0.75rem;
-    inset-inline: 0.85rem;
+    inset-inline: max(0.85rem, env(safe-area-inset-left)) max(0.85rem, env(safe-area-inset-right));
   }
 
   .nav-shell {
     grid-template-columns: auto 1fr auto;
+    width: 100%;
     min-height: 3.52rem;
     padding: 0.42rem 0.5rem 0.42rem 0.82rem;
   }
@@ -728,7 +734,7 @@
 
 @media (max-width: 420px) {
   .navbar {
-    inset-inline: 0.65rem;
+    inset-inline: max(0.65rem, env(safe-area-inset-left)) max(0.65rem, env(safe-area-inset-right));
   }
 
   .logo {
@@ -736,8 +742,9 @@
   }
 
   .mobile-panel {
-    right: 0.65rem;
-    width: calc(100vw - 1.3rem);
+    left: max(0.65rem, env(safe-area-inset-left));
+    right: max(0.65rem, env(safe-area-inset-right));
+    width: auto;
     padding: 0.85rem;
     border-radius: 22px;
   }

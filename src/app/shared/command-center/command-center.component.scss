@@ -28,7 +28,7 @@
   display: grid;
   grid-template-rows: auto minmax(16rem, 1fr) auto minmax(8rem, auto);
   gap: 1rem;
-  width: min(calc(100vw - 2rem), 64rem);
+  width: min(calc(100dvw - 2rem), 64rem);
   height: min(92dvh, 58rem);
   max-height: calc(100dvh - 1.5rem);
   overflow: hidden;
@@ -99,6 +99,11 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+  min-width: 0;
+}
+
+.command-header > div {
+  min-width: 0;
 }
 
 .command-kicker,
@@ -404,12 +409,17 @@
 
 @media (max-width: 760px) {
   .command-center {
-    inset: 0.75rem;
+    inset:
+      max(0.75rem, env(safe-area-inset-top))
+      max(0.75rem, env(safe-area-inset-right))
+      max(0.75rem, env(safe-area-inset-bottom))
+      max(0.75rem, env(safe-area-inset-left));
     left: auto;
     top: auto;
     width: auto;
-    height: calc(100dvh - 1.5rem);
-    max-height: calc(100dvh - 1.5rem);
+    height: auto;
+    max-height: calc(100dvh - max(1.5rem, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+    grid-template-rows: auto minmax(0, 1fr) minmax(7rem, 30dvh);
     border-radius: 24px;
     transform: none;
   }
@@ -419,7 +429,12 @@
   }
 
   .terminal-window {
+    grid-template-rows: auto minmax(7rem, 1fr) auto;
     min-height: 0;
+  }
+
+  .terminal-output {
+    max-height: none;
   }
 
   .terminal-prompt {
@@ -438,7 +453,21 @@
 
   .command-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-height: 32dvh;
+    max-height: none;
+  }
+
+  @keyframes commandIn {
+    from {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(0.8rem) scale(0.975);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
+    }
   }
 }
 
@@ -446,6 +475,7 @@
   .command-center {
     padding: 0.85rem;
     border-radius: 20px;
+    gap: 0.75rem;
   }
 
   .command-header h2 {
@@ -456,9 +486,12 @@
     font-size: 0.82rem;
   }
 
+  .command-close {
+    min-width: 2.65rem;
+  }
+
   .command-grid {
     grid-template-columns: 1fr;
-    max-height: 30dvh;
   }
 }
 
