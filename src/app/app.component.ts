@@ -148,7 +148,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
       if (typeof window !== 'undefined') {
         window.requestAnimationFrame(() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          try {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          } catch {
+            window.scrollTo(0, 0);
+          }
         });
       }
     }

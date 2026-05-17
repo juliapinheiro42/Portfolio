@@ -38,7 +38,7 @@ export class BugGraveyardComponent implements OnDestroy {
     this.lockBodyScroll();
 
     window.requestAnimationFrame(() => {
-      this.deathCertificate?.nativeElement.focus({ preventScroll: true });
+      this.focusElement(this.deathCertificate?.nativeElement);
     });
   }
 
@@ -51,7 +51,7 @@ export class BugGraveyardComponent implements OnDestroy {
     this.unlockBodyScroll();
 
     window.requestAnimationFrame(() => {
-      this.certificateTrigger?.focus({ preventScroll: true });
+      this.focusElement(this.certificateTrigger);
     });
   }
 
@@ -107,7 +107,7 @@ export class BugGraveyardComponent implements OnDestroy {
 
     if (!first || !last) {
       event.preventDefault();
-      dialog.focus({ preventScroll: true });
+      this.focusElement(dialog);
       return;
     }
 
@@ -120,6 +120,18 @@ export class BugGraveyardComponent implements OnDestroy {
     if (!event.shiftKey && this.document.activeElement === last) {
       event.preventDefault();
       first.focus();
+    }
+  }
+
+  private focusElement(element: HTMLElement | undefined): void {
+    if (!element) {
+      return;
+    }
+
+    try {
+      element.focus({ preventScroll: true });
+    } catch {
+      element.focus();
     }
   }
 }

@@ -7,6 +7,7 @@ import {
   OnInit,
   PLATFORM_ID
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface NavLink {
   readonly label: string;
@@ -40,6 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
+    private readonly router: Router,
     @Inject(PLATFORM_ID) platformId: object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -102,7 +104,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const target = this.document.getElementById(link.id);
 
     if (!target) {
-      window.location.href = link.id === 'home' ? '/' : `/${link.href}`;
+      this.navigateHomeThenScroll(link);
       this.closeMenu();
       return;
     }
@@ -166,6 +168,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } catch {
       target.scrollIntoView();
     }
+  }
+
+  private navigateHomeThenScroll(link: NavLink): void {
+    this.router.navigateByUrl('/').then(() => {
+      window.requestAnimationFrame(() => {
+        const target = this.document.getElementById(link.id);
+
+        if (target) {
+          this.scrollTargetIntoView(target);
+        }
+      });
+    });
   }
 
   private syncBodyScroll(): void {
