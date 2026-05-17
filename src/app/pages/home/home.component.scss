@@ -1,0 +1,24 @@
+.deferred-section-placeholder {
+  min-height: 12rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 122, 191, 0.06), transparent 16rem),
+    linear-gradient(180deg, rgba(19, 11, 24, 0.2), rgba(19, 11, 24, 0.56));
+}
+
+.deferred-section-placeholder.large {
+  min-height: 18rem;
+}
+
+.deferred-section-placeholder.contact {
+  min-height: 14rem;
+}
+
+@media (max-width: 768px) {
+  .deferred-section-placeholder {
+    min-height: 8rem;
+  }
+
+  .deferred-section-placeholder.large {
+    min-height: 10rem;
+  }
+}

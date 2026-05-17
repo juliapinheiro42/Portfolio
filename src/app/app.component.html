@@ -4,9 +4,12 @@
 
 @if (!showIntro) {
   <app-navbar />
-  <app-command-center />
-  <app-lore-video-modal />
-  <app-mascot-assistant />
+
+  @defer (on idle) {
+    <app-command-center />
+    <app-lore-video-modal />
+    <app-mascot-assistant />
+  }
 }
 
 @if (showSecretToast) {
