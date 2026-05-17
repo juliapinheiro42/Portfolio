@@ -609,7 +609,7 @@
 .mission-summary {
   position: relative;
   z-index: 1;
-  display: grid;
+  display: none;
   gap: 0.66rem;
   margin-top: 1rem;
   min-width: 0;
@@ -867,6 +867,13 @@
   margin-top: 1rem;
 }
 
+.desktop-card-details {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+}
+
 .tag-list span {
   padding: 0.54rem 0.72rem;
   border: 1px solid rgba(125, 211, 252, 0.2);
@@ -915,6 +922,7 @@
 }
 
 .project-actions .details-toggle {
+  display: none;
   border-color: rgba(125, 211, 252, 0.24);
   color: rgba(255, 243, 251, 0.9);
   background: rgba(125, 211, 252, 0.075);
@@ -923,7 +931,7 @@
 .project-details-panel {
   position: relative;
   z-index: 1;
-  display: grid;
+  display: none;
   grid-template-rows: 0fr;
   min-width: 0;
   margin-top: 0;
@@ -1280,6 +1288,22 @@
 
   .project-actions .mission-report-button {
     display: none;
+  }
+
+  .mission-summary {
+    display: grid;
+  }
+
+  .project-actions .details-toggle {
+    display: inline-flex;
+  }
+
+  .desktop-card-details {
+    display: none;
+  }
+
+  .project-details-panel {
+    display: grid;
   }
 
   .project-card {

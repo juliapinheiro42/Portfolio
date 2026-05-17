@@ -24,7 +24,7 @@ import { SystemMapComponent } from '../../../../shared/system-map/system-map.com
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
   @Input() set playReconstruction(value: boolean) {
-    this.isReconstructing = HERO_RECONSTRUCTION_CONFIG.enabled && value;
+    this.isReconstructing = HERO_RECONSTRUCTION_CONFIG.enabled && value && !this.isMobileVisualMode;
   }
 
   isReconstructing = false;
@@ -202,5 +202,9 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     }
 
     this.isMobileVisualMode = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+
+    if (this.isMobileVisualMode) {
+      this.isReconstructing = false;
+    }
   }
 }

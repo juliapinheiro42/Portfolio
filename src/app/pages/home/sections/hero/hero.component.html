@@ -1,5 +1,5 @@
 <app-section-shell sectionId="home" labelledBy="hero-title" variant="hero">
-  @if (isReconstructing) {
+  @if (isReconstructing && !isMobileVisualMode) {
     <app-hero-reconstruction (finished)="finishReconstruction()" />
   }
 
